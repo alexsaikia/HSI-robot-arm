@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Launch configuration -->
+    <arg name="sim" default="false"/>
+
+    <!-- Arm configuration -->
+    <arg name="arm" default="gen3"/>
+    <arg name="dof" default="7" if="$(eval arg('arm') == 'gen3')"/> <!-- Number of degrees of freedom of the arm -->
+    <arg name="vision" default="false"/> <!-- True if the arm has a Vision module -->
+    <arg name="use_hard_limits" default="false"/> <!-- Set soft limits as hard limits (Gen3 only) -->
+
+    <!-- Namespace -->
+    <arg name="robot_name" default="my_$(arg arm)"/>
+    <arg name="prefix" default=""/>
+
+    <include file="$(find kortex_driver)/launch/kortex_driver.launch" if="$(eval not arg('sim'))"> 
+        <arg name="arm" value="$(arg arm)"/>
+        <arg name="dof" value="$(arg dof)"/>
+        <arg name="vision" value="$(arg vision)"/>
+        <arg name="use_hard_limits" value="$(arg use_hard_limits)"/>
+        <arg name="start_rviz" value="true"/>
+        <arg name="robot_name" value="$(arg robot_name)"/>
+        <arg name="prefix" value="$(arg prefix)"/>
+    </include>
+     <include file="$(find kortex_gazebo)/launch/spawn_kortex_robot.launch" unless="$(eval not arg('sim'))"> 
+        <arg name="arm" value="$(arg arm)"/>
+        <arg name="dof" value="$(arg dof)"/>
+        <arg name="vision" value="$(arg vision)"/>
+        <arg name="start_gazebo" value="true"/>
+        <arg name="start_rviz" value="true"/>
+        <arg name="robot_name" value="$(arg robot_name)"/>
+        <arg name="prefix" value="$(arg prefix)"/>
+    </include>
+
+    
+</launch>
