@@ -14,6 +14,8 @@
     <arg name="robot_name" default="my_$(arg arm)"/>
     <arg name="prefix" default=""/>
 
+    <!-- Start robot launch files -->
+    <!-- Real robot -->
     <include file="$(find kortex_driver)/launch/kortex_driver.launch" if="$(eval not arg('sim'))"> 
         <arg name="arm" value="$(arg arm)"/>
         <arg name="dof" value="$(arg dof)"/>
@@ -23,6 +25,7 @@
         <arg name="robot_name" value="$(arg robot_name)"/>
         <arg name="prefix" value="$(arg prefix)"/>
     </include>
+    <!-- Simulated robot -->
      <include file="$(find kortex_gazebo)/launch/spawn_kortex_robot.launch" unless="$(eval not arg('sim'))"> 
         <arg name="arm" value="$(arg arm)"/>
         <arg name="dof" value="$(arg dof)"/>
@@ -32,6 +35,9 @@
         <arg name="robot_name" value="$(arg robot_name)"/>
         <arg name="prefix" value="$(arg prefix)"/>
     </include>
+
+    <!-- Start camera launch files -->
+    
 
     
 </launch>
