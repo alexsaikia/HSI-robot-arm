@@ -3,12 +3,21 @@
 
     <!-- Launch configuration -->
     <arg name="sim" default="false"/>
+    <arg name="rgb_vision" default="true"/>
 
     <!-- Arm configuration -->
     <arg name="arm" default="gen3"/>
     <arg name="dof" default="7" if="$(eval arg('arm') == 'gen3')"/> <!-- Number of degrees of freedom of the arm -->
     <arg name="vision" default="false"/> <!-- True if the arm has a Vision module -->
     <arg name="use_hard_limits" default="false"/> <!-- Set soft limits as hard limits (Gen3 only) -->
+
+    <!-- Camera configuration -->
+    <arg name="left_camera_name" default="camLeft"/> <!--Left camera name-->
+    <arg name="left_camera_serial" default="19440080"/> <!--Left camera serial number-->
+    <arg name="right_camera_name" default="camRight"/> <!--Right camera name-->
+    <arg name="right_camera_serial" default="19440078"/> <!--Right camera serial number-->
+    <arg name="set_frame_rate" default="true"/> <!--Enable set frame rate. If false camera will acquire maximum number of frames-->
+    <arg name="frame_rate" default="30"/> <!--Set frame rate-->
 
     <!-- Namespace -->
     <arg name="robot_name" default="my_$(arg arm)"/>
@@ -37,7 +46,25 @@
     </include>
 
     <!-- Start camera launch files -->
-    
-
+    <!-- Left Camera Launch -->
+    <include file="$(find spinnaker_camera_driver)/launch/camera.launch" if="$(eval arg('rgb_vision'))">
+        <arg name="camera_name" value="$(arg left_camera_name)"/>
+        <arg name="camera_serial" value="$(arg left_camera_serial)"/>
+        <arg name="isp_enable" value="False" /> 
+        <arg name="encoding" value="BayerRG8" />
+        <arg name="color_balance" value="Off" /> 
+        <arg name="control_frame_rate" value="$(arg set_frame_rate)"/>
+        <arg name="frame_rate" value="$(arg frame_rate)"/>
+    </include>
+    <!-- Right Camera Launch -->
+    <include file="$(find spinnaker_camera_driver)/launch/camera.launch" if="$(eval arg('rgb_vision'))">
+        <arg name="camera_name" value="$(arg right_camera_name)"/>
+        <arg name="camera_serial" value="$(arg right_camera_serial)"/>
+        <arg name="isp_enable" value="False" /> 
+        <arg name="encoding" value="BayerRG8" />
+        <arg name="color_balance" value="Off" /> 
+        <arg name="control_frame_rate" value="$(arg set_frame_rate)"/>
+        <arg name="frame_rate" value="$(arg frame_rate)"/>
+    </include>
     
 </launch>
