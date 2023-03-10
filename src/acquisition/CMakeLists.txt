@@ -15,6 +15,8 @@ find_package(catkin REQUIRED COMPONENTS
   kortex_examples
   kortex_gazebo
   spinnaker_camera_driver
+  rviz_visual_tools
+  moveit_tutorials
 )
 
 ## System dependencies are found with CMake's conventions
@@ -137,8 +139,8 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/acquisition_node.cpp)
-
+add_executable(move_group_interface_tutorial src/move_group_interface_tutorial.cpp)
+target_link_libraries(move_group_interface_tutorial ${catkin_LIBRARIES})
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -173,6 +175,7 @@ include_directories(
 # install(TARGETS ${PROJECT_NAME}_node
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
+
 
 ## Mark libraries for installation
 ## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_libraries.html
