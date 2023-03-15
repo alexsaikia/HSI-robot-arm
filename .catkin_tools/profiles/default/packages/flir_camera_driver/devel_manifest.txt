@@ -1,0 +1,2 @@
+flir_camera_driver/flir_camera_driver
+/home/alex/HSI-robot-arm/devel/.private/flir_camera_driver/cmake.lock /home/alex/HSI-robot-arm/devel/./cmake.lock

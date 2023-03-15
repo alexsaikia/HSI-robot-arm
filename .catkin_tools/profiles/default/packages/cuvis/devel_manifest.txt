@@ -1,0 +1,5 @@
+cuvis
+/home/alex/HSI-robot-arm/devel/.private/cuvis/cmake.lock /home/alex/HSI-robot-arm/devel/./cmake.lock
+/home/alex/HSI-robot-arm/devel/.private/cuvis/lib/pkgconfig/cuvis.pc /home/alex/HSI-robot-arm/devel/lib/pkgconfig/cuvis.pc
+/home/alex/HSI-robot-arm/devel/.private/cuvis/share/cuvis/cmake/cuvisConfig.cmake /home/alex/HSI-robot-arm/devel/share/cuvis/cmake/cuvisConfig.cmake
+/home/alex/HSI-robot-arm/devel/.private/cuvis/share/cuvis/cmake/cuvisConfig-version.cmake /home/alex/HSI-robot-arm/devel/share/cuvis/cmake/cuvisConfig-version.cmake

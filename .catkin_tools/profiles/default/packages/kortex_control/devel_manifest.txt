@@ -1,0 +1,5 @@
+ros_kortex/kortex_control
+/home/alex/HSI-robot-arm/devel/.private/kortex_control/cmake.lock /home/alex/HSI-robot-arm/devel/./cmake.lock
+/home/alex/HSI-robot-arm/devel/.private/kortex_control/lib/pkgconfig/kortex_control.pc /home/alex/HSI-robot-arm/devel/lib/pkgconfig/kortex_control.pc
+/home/alex/HSI-robot-arm/devel/.private/kortex_control/share/kortex_control/cmake/kortex_controlConfig.cmake /home/alex/HSI-robot-arm/devel/share/kortex_control/cmake/kortex_controlConfig.cmake
+/home/alex/HSI-robot-arm/devel/.private/kortex_control/share/kortex_control/cmake/kortex_controlConfig-version.cmake /home/alex/HSI-robot-arm/devel/share/kortex_control/cmake/kortex_controlConfig-version.cmake

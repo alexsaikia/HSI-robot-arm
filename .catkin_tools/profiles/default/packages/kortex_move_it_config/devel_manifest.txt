@@ -1,0 +1,2 @@
+ros_kortex/kortex_move_it_config/kortex_move_it_config
+/home/alex/HSI-robot-arm/devel/.private/kortex_move_it_config/cmake.lock /home/alex/HSI-robot-arm/devel/./cmake.lock

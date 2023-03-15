@@ -1,0 +1,20 @@
+flir_camera_driver/spinnaker_camera_driver
+/home/alex/HSI-robot-arm/devel/.private/spinnaker_camera_driver/cmake.lock /home/alex/HSI-robot-arm/devel/./cmake.lock
+/home/alex/HSI-robot-arm/devel/.private/spinnaker_camera_driver/lib/libCamera.so /home/alex/HSI-robot-arm/devel/lib/libCamera.so
+/home/alex/HSI-robot-arm/devel/.private/spinnaker_camera_driver/lib/libCm3.so /home/alex/HSI-robot-arm/devel/lib/libCm3.so
+/home/alex/HSI-robot-arm/devel/.private/spinnaker_camera_driver/lib/libSpinnakerCameraLib.so /home/alex/HSI-robot-arm/devel/lib/libSpinnakerCameraLib.so
+/home/alex/HSI-robot-arm/devel/.private/spinnaker_camera_driver/lib/libGh3.so /home/alex/HSI-robot-arm/devel/lib/libGh3.so
+/home/alex/HSI-robot-arm/devel/.private/spinnaker_camera_driver/lib/libDiagnostics.so /home/alex/HSI-robot-arm/devel/lib/libDiagnostics.so
+/home/alex/HSI-robot-arm/devel/.private/spinnaker_camera_driver/lib/libSpinnakerCameraNodelet.so /home/alex/HSI-robot-arm/devel/lib/libSpinnakerCameraNodelet.so
+/home/alex/HSI-robot-arm/devel/.private/spinnaker_camera_driver/lib/python3/dist-packages/spinnaker_camera_driver/__init__.py /home/alex/HSI-robot-arm/devel/lib/python3/dist-packages/spinnaker_camera_driver/__init__.py
+/home/alex/HSI-robot-arm/devel/.private/spinnaker_camera_driver/lib/python3/dist-packages/spinnaker_camera_driver/cfg/SpinnakerConfig.py /home/alex/HSI-robot-arm/devel/lib/python3/dist-packages/spinnaker_camera_driver/cfg/SpinnakerConfig.py
+/home/alex/HSI-robot-arm/devel/.private/spinnaker_camera_driver/lib/python3/dist-packages/spinnaker_camera_driver/cfg/__init__.py /home/alex/HSI-robot-arm/devel/lib/python3/dist-packages/spinnaker_camera_driver/cfg/__init__.py
+/home/alex/HSI-robot-arm/devel/.private/spinnaker_camera_driver/lib/spinnaker_camera_driver/camera_node /home/alex/HSI-robot-arm/devel/lib/spinnaker_camera_driver/camera_node
+/home/alex/HSI-robot-arm/devel/.private/spinnaker_camera_driver/lib/spinnaker_camera_driver/spinnaker_test_node /home/alex/HSI-robot-arm/devel/lib/spinnaker_camera_driver/spinnaker_test_node
+/home/alex/HSI-robot-arm/devel/.private/spinnaker_camera_driver/lib/pkgconfig/spinnaker_camera_driver.pc /home/alex/HSI-robot-arm/devel/lib/pkgconfig/spinnaker_camera_driver.pc
+/home/alex/HSI-robot-arm/devel/.private/spinnaker_camera_driver/share/spinnaker_camera_driver/cmake/spinnaker_camera_driverConfig-version.cmake /home/alex/HSI-robot-arm/devel/share/spinnaker_camera_driver/cmake/spinnaker_camera_driverConfig-version.cmake
+/home/alex/HSI-robot-arm/devel/.private/spinnaker_camera_driver/share/spinnaker_camera_driver/cmake/spinnaker_camera_driverConfig.cmake /home/alex/HSI-robot-arm/devel/share/spinnaker_camera_driver/cmake/spinnaker_camera_driverConfig.cmake
+/home/alex/HSI-robot-arm/devel/.private/spinnaker_camera_driver/share/spinnaker_camera_driver/docs/SpinnakerConfig.dox /home/alex/HSI-robot-arm/devel/share/spinnaker_camera_driver/docs/SpinnakerConfig.dox
+/home/alex/HSI-robot-arm/devel/.private/spinnaker_camera_driver/share/spinnaker_camera_driver/docs/SpinnakerConfig-usage.dox /home/alex/HSI-robot-arm/devel/share/spinnaker_camera_driver/docs/SpinnakerConfig-usage.dox
+/home/alex/HSI-robot-arm/devel/.private/spinnaker_camera_driver/share/spinnaker_camera_driver/docs/SpinnakerConfig.wikidoc /home/alex/HSI-robot-arm/devel/share/spinnaker_camera_driver/docs/SpinnakerConfig.wikidoc
+/home/alex/HSI-robot-arm/devel/.private/spinnaker_camera_driver/include/spinnaker_camera_driver/SpinnakerConfig.h /home/alex/HSI-robot-arm/devel/include/spinnaker_camera_driver/SpinnakerConfig.h

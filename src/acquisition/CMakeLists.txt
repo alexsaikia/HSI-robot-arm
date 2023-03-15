@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0.2)
 project(acquisition)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -17,6 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
   spinnaker_camera_driver
   rviz_visual_tools
   moveit_tutorials
+  pluginlib
 )
 
 ## System dependencies are found with CMake's conventions
@@ -139,8 +140,8 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(move_group_interface_tutorial src/move_group_interface_tutorial.cpp)
-target_link_libraries(move_group_interface_tutorial ${catkin_LIBRARIES})
+add_executable(move_group_interface_test src/move_group_interface_test.cpp)
+target_link_libraries(move_group_interface_test ${catkin_LIBRARIES})
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use

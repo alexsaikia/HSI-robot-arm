@@ -1,0 +1,5 @@
+ros_kortex/kortex_gazebo
+/home/alex/HSI-robot-arm/devel/.private/kortex_gazebo/cmake.lock /home/alex/HSI-robot-arm/devel/./cmake.lock
+/home/alex/HSI-robot-arm/devel/.private/kortex_gazebo/lib/pkgconfig/kortex_gazebo.pc /home/alex/HSI-robot-arm/devel/lib/pkgconfig/kortex_gazebo.pc
+/home/alex/HSI-robot-arm/devel/.private/kortex_gazebo/share/kortex_gazebo/cmake/kortex_gazeboConfig.cmake /home/alex/HSI-robot-arm/devel/share/kortex_gazebo/cmake/kortex_gazeboConfig.cmake
+/home/alex/HSI-robot-arm/devel/.private/kortex_gazebo/share/kortex_gazebo/cmake/kortex_gazeboConfig-version.cmake /home/alex/HSI-robot-arm/devel/share/kortex_gazebo/cmake/kortex_gazeboConfig-version.cmake
