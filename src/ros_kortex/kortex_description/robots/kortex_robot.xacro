@@ -50,6 +50,54 @@
                 <child link="${prefix}tool_frame" />
                 <axis xyz="0 0 0" />
             </joint>
+            <!-- Add adapter link and joint -->
+            <link name="${prefix}adapter_link">
+                <visual>
+                    <origin xyz="0 0 0" rpy="0 0 0" />
+                    <geometry>
+                    <mesh filename="package://kortex_description/arms/gen3/${dof}dof/meshes/adapter_link.stl" />
+                    </geometry>
+                    <material name="">
+                    <color rgba="0.0 0.3 0.3 1" />
+                    </material>
+                </visual>
+                <collision>
+                    <origin xyz="0 0 0" rpy="0 0 0" />
+                    <geometry>
+                    <mesh filename="package://kortex_description/arms/gen3/${dof}dof/meshes/adapter_link.stl" />
+                    </geometry>
+                </collision>
+            </link>
+            <joint name="${prefix}adapter_joint" type="fixed">
+                <origin xyz="0 0 0.003" rpy="0 0 0" />
+                <child link="${prefix}adapter_link" />
+                <parent link="${prefix}tool_frame" />
+                <axis xyz="0 0 0" />
+            </joint>
+            <!-- Add top plate link and joint -->
+            <link name="${prefix}top_plate_link">
+                <visual>
+                    <origin xyz="0 0 0" rpy="0 0 0" />
+                    <geometry>
+                    <mesh filename="package://kortex_description/arms/gen3/${dof}dof/meshes/top_plate_link.stl" />
+                    </geometry>
+                    <material name="">
+                    <color rgba="0.0 0.3 0.3 1" />
+                    </material>
+                </visual>
+                <collision>
+                    <origin xyz="0 0 0" rpy="0 0 0" />
+                    <geometry>
+                    <mesh filename="package://kortex_description/arms/gen3/${dof}dof/meshes/top_plate_link.stl" />
+                    </geometry>
+                </collision>
+            </link>
+            <joint name="${prefix}top_plate_joint" type="fixed">
+                <origin xyz="0 0 0.0165" rpy="0 0 0" />
+                <parent link="${prefix}adapter_link" />
+                <child link="${prefix}top_plate_link" />
+                <axis xyz="0 0 0" />
+            </joint>
         </xacro:if>
 
         <!-- Load the Gazebo transmissions and gazebo_ros_control plugin -->
