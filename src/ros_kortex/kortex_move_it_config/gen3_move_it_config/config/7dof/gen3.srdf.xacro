@@ -20,6 +20,7 @@
         <joint name="$(arg prefix)joint_7" />
         <joint name="$(arg prefix)end_effector" />
         <joint name="$(arg prefix)tool_frame_joint" />
+        <joint name="$(arg prefix)camera_joint" />
         <!-- Adapter joint -->
         <joint name="$(arg prefix)adapter_joint" />
         <joint name="$(arg prefix)top_plate_joint" />

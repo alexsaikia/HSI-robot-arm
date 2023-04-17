@@ -50,6 +50,15 @@
                 <child link="${prefix}tool_frame" />
                 <axis xyz="0 0 0" />
             </joint>
+            <!-- Define a joint with the tool frame as a parent called camera_joint -->
+            <joint name="${prefix}camera_joint" type="fixed">
+                <origin xyz="0.0 0.1 0.04" rpy="${-pi/2} 0 0" />
+                <parent link="${prefix}tool_frame" />
+                <child link="${prefix}camera_link" />
+                <axis xyz="0 0 0" />
+            </joint>
+            <!-- Define camera_link -->
+            <link name="${prefix}camera_link"/>
             <xacro:if value="${not sim}">
                 <!-- Add adapter link and joint -->
                 <link name="${prefix}adapter_link">

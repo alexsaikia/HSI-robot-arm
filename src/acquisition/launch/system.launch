@@ -25,6 +25,12 @@
     <arg name="robot_name" default="my_$(arg arm)"/>
     <arg name="prefix" default=""/>
 
+    <!-- Make parameters for acquire data sphere -->
+    <param name="N" value="64"/>
+    <param name="sample_rad" value="0.1"/>
+    <param name="sample_point" value="{0.5,0.0,0.0}"/>
+
+   
     <!-- Start robot launch files -->
     <!-- Real robot -->
     <include file="$(find kortex_driver)/launch/kortex_driver.launch" if="$(eval not arg('sim'))"> 
