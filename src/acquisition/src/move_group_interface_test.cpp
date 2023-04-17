@@ -128,7 +128,8 @@ int main(int argc, char** argv)
   // and should be preferred. Note that the pose goal we had set earlier is still active,
   // so the robot will try to move to that goal.
 
-  // move_group_interface.move();
+  move_group_interface.move();
+  visual_tools.prompt("Press 'next' in the RvizVisualToolsGui window to continue the demo");
 
   // Planning to a joint-space goal
   // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -172,8 +173,8 @@ int main(int argc, char** argv)
   // Let's specify a path constraint and a pose goal for our group.
   // First define the path constraint.
   moveit_msgs::OrientationConstraint ocm;
-  ocm.link_name = "panda_link7";
-  ocm.header.frame_id = "panda_link0";
+  ocm.link_name = "tool_frame";
+  ocm.header.frame_id = "base_link";
   ocm.orientation.w = 1.0;
   ocm.absolute_x_axis_tolerance = 0.1;
   ocm.absolute_y_axis_tolerance = 0.1;

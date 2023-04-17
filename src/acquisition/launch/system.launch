@@ -54,7 +54,7 @@
         <arg name="camera_serial" value="$(arg left_camera_serial)"/>
         <arg name="isp_enable" value="False" /> 
         <arg name="encoding" value="BayerRG8" />
-        <arg name="color_balance" value="Off" /> 
+        <arg name="color_balance" value="Once" /> 
         <arg name="control_frame_rate" value="$(arg set_frame_rate)"/>
         <arg name="frame_rate" value="$(arg frame_rate)"/>
     </include>
@@ -64,7 +64,7 @@
         <arg name="camera_serial" value="$(arg right_camera_serial)"/>
         <arg name="isp_enable" value="False" /> 
         <arg name="encoding" value="BayerRG8" />
-        <arg name="color_balance" value="Off" /> 
+        <arg name="color_balance" value="Once" /> 
         <arg name="control_frame_rate" value="$(arg set_frame_rate)"/>
         <arg name="frame_rate" value="$(arg frame_rate)"/>
     </include>
