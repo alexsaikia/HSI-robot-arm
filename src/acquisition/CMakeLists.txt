@@ -142,6 +142,8 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(move_group_interface_test src/move_group_interface_test.cpp)
 target_link_libraries(move_group_interface_test ${catkin_LIBRARIES})
+add_executable(acquire_data_sphere src/acquire_data_sphere.cpp)
+target_link_libraries(acquire_data_sphere ${catkin_LIBRARIES})
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use

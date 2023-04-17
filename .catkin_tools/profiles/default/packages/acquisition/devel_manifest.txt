@@ -1,5 +1,6 @@
 acquisition
 /home/alex/HSI-robot-arm/devel/.private/acquisition/cmake.lock /home/alex/HSI-robot-arm/devel/./cmake.lock
+/home/alex/HSI-robot-arm/devel/.private/acquisition/lib/acquisition/acquire_data_sphere /home/alex/HSI-robot-arm/devel/lib/acquisition/acquire_data_sphere
 /home/alex/HSI-robot-arm/devel/.private/acquisition/lib/acquisition/move_group_interface_test /home/alex/HSI-robot-arm/devel/lib/acquisition/move_group_interface_test
 /home/alex/HSI-robot-arm/devel/.private/acquisition/lib/pkgconfig/acquisition.pc /home/alex/HSI-robot-arm/devel/lib/pkgconfig/acquisition.pc
 /home/alex/HSI-robot-arm/devel/.private/acquisition/share/acquisition/cmake/acquisitionConfig-version.cmake /home/alex/HSI-robot-arm/devel/share/acquisition/cmake/acquisitionConfig-version.cmake
