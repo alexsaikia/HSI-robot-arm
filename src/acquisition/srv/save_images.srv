@@ -1,0 +1,7 @@
+# Service to save images
+# Request the file name to save the image
+string left_file_name
+string right_file_name
+---
+# Response status
+bool success

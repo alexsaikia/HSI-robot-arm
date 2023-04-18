@@ -50,6 +50,7 @@
   <!--   <doc_depend>doxygen</doc_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
 
+  <build_depend>message_generation</build_depend>
   <build_depend>flir_camera_description</build_depend>
   <build_depend>kortex_control</build_depend>
   <build_depend>kortex_description</build_depend>
@@ -72,6 +73,7 @@
   <build_export_depend>moveit_tutorials</build_export_depend> 
   <build_export_depend>pluginlib</build_export_depend> 
 
+  <exec_depend>message_runtime</exec_depend>
   <exec_depend>flir_camera_description</exec_depend>
   <exec_depend>kortex_control</exec_depend>
   <exec_depend>kortex_description</exec_depend>
