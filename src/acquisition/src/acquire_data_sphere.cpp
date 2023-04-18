@@ -42,7 +42,9 @@ int main(int argc, char** argv)
 
   // Define number of capture points from ROS parameter server
   int N;
-  node_handle.param("/N", N, 10);
+  int NN;
+  node_handle.param("/N", NN, 10);
+  N = NN*2;
 
   // Define sample radius from ROS parameter server
   double sample_rad;
@@ -101,7 +103,7 @@ int main(int argc, char** argv)
   //Subscribe to left camera
 
   //Subscribe to right camera
-  
+
 
 
   
