@@ -29,6 +29,7 @@
     <param name="N" value="32"/>
     <param name="sample_rad" value="0.1"/>
     <param name="sample_point" value="{0.5,0.0,0.0}"/>
+    <param name="capture" value="true"/>
 
    
     <!-- Start robot launch files -->
@@ -74,5 +75,11 @@
         <arg name="control_frame_rate" value="$(arg set_frame_rate)"/>
         <arg name="frame_rate" value="$(arg frame_rate)"/>
     </include>
+
+    <!-- Launch save images server node -->
+    <node pkg="acquisition" type="save_images_server" name="save_images_server" respawn="true" output="screen"/>
+
+    <!-- Launch acquire data sphere node -->
+    <node pkg="acquisition" type="acquire_data_sphere" name="acquire_data_sphere" respawn="true" ns="my_gen3" output="screen"/>
     
 </launch>

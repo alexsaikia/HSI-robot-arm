@@ -4,6 +4,7 @@ acquisition
 /home/alex/HSI-robot-arm/devel/.private/acquisition/lib/python3/dist-packages/acquisition/srv/__init__.py /home/alex/HSI-robot-arm/devel/lib/python3/dist-packages/acquisition/srv/__init__.py
 /home/alex/HSI-robot-arm/devel/.private/acquisition/lib/python3/dist-packages/acquisition/srv/_save_images.py /home/alex/HSI-robot-arm/devel/lib/python3/dist-packages/acquisition/srv/_save_images.py
 /home/alex/HSI-robot-arm/devel/.private/acquisition/lib/acquisition/acquire_data_sphere /home/alex/HSI-robot-arm/devel/lib/acquisition/acquire_data_sphere
+/home/alex/HSI-robot-arm/devel/.private/acquisition/lib/acquisition/save_images_server /home/alex/HSI-robot-arm/devel/lib/acquisition/save_images_server
 /home/alex/HSI-robot-arm/devel/.private/acquisition/lib/acquisition/move_group_interface_test /home/alex/HSI-robot-arm/devel/lib/acquisition/move_group_interface_test
 /home/alex/HSI-robot-arm/devel/.private/acquisition/lib/pkgconfig/acquisition.pc /home/alex/HSI-robot-arm/devel/lib/pkgconfig/acquisition.pc
 /home/alex/HSI-robot-arm/devel/.private/acquisition/share/common-lisp/ros/acquisition/srv/acquisition-srv.asd /home/alex/HSI-robot-arm/devel/share/common-lisp/ros/acquisition/srv/acquisition-srv.asd

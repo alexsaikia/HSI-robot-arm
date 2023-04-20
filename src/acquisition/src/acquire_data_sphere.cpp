@@ -8,6 +8,10 @@
 #include <moveit_msgs/CollisionObject.h>
 
 #include <moveit_visual_tools/moveit_visual_tools.h>
+#include <acquisition/save_images.h>
+#include <cstdlib>
+
+
 
 //To run this node type in terminal:
 //rosrun acquisition acquire_data_sphere __ns:="my_gen3"
@@ -98,14 +102,34 @@ int main(int argc, char** argv)
   collision_objects.push_back(sphere_sample_collision_object);
   planning_scene_interface.addCollisionObjects(collision_objects);
 
-  //Publishers and Subscribers
-  // ^^^^^^^^^^^^^^^^^^^^^^^^^
-  //Subscribe to left camera
+  // Setup for data capture
+  // ^^^^^^^^^^^^^^^^^^^^^^
+  //
+  // If rosparam capture is true then start the capture service
+  bool capture_data = false;
+  ros::param::get("/capture", capture_data);
+  // Start the capture service
+  ros::ServiceClient client = node_handle.serviceClient<acquisition::save_images>("/save_images");
+  // If initializing the client fails then set capture_data to false
+  if (!client.waitForExistence(ros::Duration(5.0)))
+  {
+    ROS_ERROR("Could not connect to save_images service");
+    capture_data = false;
+  }
 
-  //Subscribe to right camera
-
-
-
+  // If capturing sata then create dataset folder
+  if (capture_data)
+  {
+    // Create a folder for the dataset
+    std::string dataset_folder = "/home/alex/data/dataset";
+    std::string dataset_name = "dataset_" + std::to_string(time(NULL));
+    std::string dataset_path = dataset_folder + "/" + dataset_name;
+    std::string command = "mkdir " + dataset_path;
+    system(command.c_str());
+    // Set the dataset path in the parameter server
+    ros::param::set("/dataset_path", dataset_path);
+  }
+  
   
   // Visualization
   // ^^^^^^^^^^^^^
@@ -121,12 +145,16 @@ int main(int argc, char** argv)
   visual_tools.loadRemoteControl();
 
   // RViz provides many types of markers, in this demo we will use text, cylinders, and spheres
+  //Create two text poses
   Eigen::Isometry3d text_pose = Eigen::Isometry3d::Identity();
   text_pose.translation().z() = 1.0;
   visual_tools.publishText(text_pose, "Acquire data sphere", rvt::WHITE, rvt::XLARGE);
-
+  Eigen::Isometry3d text_pose2 = Eigen::Isometry3d::Identity();
+  text_pose2.translation().z() = 0.8;
+  
   // Batch publishing is used to reduce the number of messages being sent to RViz for large visualizations
   visual_tools.trigger();
+
 
   // Getting Basic Information
   // ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -142,6 +170,7 @@ int main(int argc, char** argv)
   std::copy(move_group_interface.getJointModelGroupNames().begin(),
             move_group_interface.getJointModelGroupNames().end(), std::ostream_iterator<std::string>(std::cout, ", "));
 
+
   // Start the acquisition process
   // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   visual_tools.prompt("Press 'next' in the RvizVisualToolsGui window to start the acquisition process");
@@ -150,7 +179,7 @@ int main(int argc, char** argv)
   std::vector<std::vector<double>> capture_points;
   //Define a vector of capture orientations
   std::vector<std::vector<double>> capture_orientations;
-  for (int i = 0; i < N; i++)
+  for (int i = 0; i < NN; i++)
   {
     //Define tf2 quaternion
     tf2::Quaternion q;
@@ -182,7 +211,7 @@ int main(int argc, char** argv)
 
   // Define a vector containing all the target poses
   std::vector<geometry_msgs::Pose> target_poses;
-  for (int i = 0; i < N; i++)
+  for (int i = 0; i < NN; i++)
   {
     geometry_msgs::Pose target_pose;
     target_pose.position.x = capture_points[i][0];
@@ -192,19 +221,19 @@ int main(int argc, char** argv)
     target_pose.orientation.y = capture_orientations[i][1];
     target_pose.orientation.z = capture_orientations[i][2];
     target_pose.orientation.w = capture_orientations[i][3];
-    target_poses.push_back(target_pose);   
+    target_poses.push_back(target_pose);  
   }
 
 
   // Move the robot to the capture points
   // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  for (int i = 0; i < N; i++)
+  for (int i = 0; i < NN; i++)
   {
     
     // Set the target pose
     move_group_interface.setPoseTarget(target_poses[i]);
     //Wait for user input
-    visual_tools.prompt("Press 'next' in the RvizVisualToolsGui window to plan for the robot to the capture point");
+    // visual_tools.prompt("Press 'next' in the RvizVisualToolsGui window to plan for the robot to the capture point");
 
     // Plan the motion
     moveit::planning_interface::MoveGroupInterface::Plan my_plan;
@@ -214,17 +243,43 @@ int main(int argc, char** argv)
     visual_tools.publishAxisLabeled(target_poses[i], "pose" + std::to_string(i));
     visual_tools.publishText(text_pose, "Pose Goal" + std::to_string(i), rvt::WHITE, rvt::XLARGE);
     visual_tools.trigger();
-    visual_tools.prompt("Press 'next' in the RvizVisualToolsGui window to continue the acquisition process");
+
+    //Wait for user input
+    visual_tools.prompt("Press 'next' in the RvizVisualToolsGui window to move the robot");
     visual_tools.trigger();
     // Execute the motion if the plan was successful
     if (success)
     {
       move_group_interface.execute(my_plan);
+      
     }
     else
     {
       ROS_ERROR("Plan failed");
     }
+
+    //Wait for user input
+    visual_tools.prompt("Press 'next' in the RvizVisualToolsGui window to capture images. Remember to capture with the HSI camera also!");
+    // If capturing data is enabled, call the service
+    if (capture_data)
+    {
+      //Create request
+      acquisition::save_images srv;
+      srv.request.left_file_name = "/home/alex/data/left" + std::to_string(i) + ".png";
+      srv.request.right_file_name = "/home/alex/data/right" + std::to_string(i) + ".png";
+      // Call the service
+      if (client.call(srv))
+      {
+        ROS_INFO("Service call successful");
+        visual_tools.publishText(text_pose2, "Pose Goal " + std::to_string(i) + " captured", rvt::WHITE, rvt::XLARGE);
+      }
+      else
+      {
+        ROS_ERROR("Failed to call service");
+        visual_tools.publishText(text_pose2, "Pose Goal " + std::to_string(i) + " capture unsuccessful", rvt::WHITE, rvt::XLARGE);
+      }
+      visual_tools.trigger();
+    } 
   }
 
 

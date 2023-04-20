@@ -8,6 +8,9 @@ add_compile_options(-std=c++14)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  rospy
+  std_msgs
   flir_camera_description
   kortex_control
   kortex_description
@@ -19,6 +22,9 @@ find_package(catkin REQUIRED COMPONENTS
   moveit_tutorials
   pluginlib
   message_generation  
+  cv_bridge
+  image_transport
+  sensor_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -77,7 +83,9 @@ add_service_files(
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
   DEPENDENCIES
-  std_msgs  # Or other packages containing msgs
+  std_msgs
+  sensor_msgs
+  # Or other packages containing msgs
 )
 
 ################################################
@@ -144,6 +152,10 @@ add_executable(move_group_interface_test src/move_group_interface_test.cpp)
 target_link_libraries(move_group_interface_test ${catkin_LIBRARIES})
 add_executable(acquire_data_sphere src/acquire_data_sphere.cpp)
 target_link_libraries(acquire_data_sphere ${catkin_LIBRARIES})
+add_dependencies(acquire_data_sphere ${PROJECT_NAME}_generate_messages_cpp)
+add_executable(save_images_server src/save_images_server.cpp)
+target_link_libraries(save_images_server ${catkin_LIBRARIES})
+add_dependencies(save_images_server ${PROJECT_NAME}_generate_messages_cpp)
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
