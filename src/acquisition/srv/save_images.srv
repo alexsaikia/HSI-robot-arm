@@ -1,7 +1,10 @@
 # Service to save images
 # Request the file name to save the image
+int64 img_num
 string left_file_name
 string right_file_name
+string eef_file_name
+geometry_msgs/PoseStamped eef_pose
 ---
 # Response status
 bool success

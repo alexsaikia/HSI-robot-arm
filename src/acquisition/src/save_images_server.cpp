@@ -18,50 +18,28 @@
 #include <image_transport/subscriber_filter.h>
 #include <image_geometry/pinhole_camera_model.h>
 #include <std_msgs/String.h>
+#include <geometry_msgs/PoseStamped.h>
 
 // Global variables to store the latest left and right images
 cv::Mat g_left_image;
 cv::Mat g_right_image;
 
-// // Callback function subscribed to the left camera image topic
-// void camLeftCallback(const sensor_msgs::ImageConstPtr& msg)
-// {
-//     cv_bridge::CvImagePtr cv_ptr;
-//     try
-//     {
-//         cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
-//         g_left_image = cv_ptr->image;
-//     }
-//     catch (cv_bridge::Exception& e)
-//     {
-//         ROS_ERROR("cv_bridge exception: %s", e.what());
-//         return;
-//     }
-// }
-
-// // Callback function subscribed to the right camera
-// void camRightCallback(const sensor_msgs::ImageConstPtr& msg)
-// {
-//     cv_bridge::CvImagePtr cv_ptr;
-//     try
-//     {
-//         cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
-//         g_right_image = cv_ptr->image;
-//     }
-//     catch (cv_bridge::Exception& e)
-//     {
-//         ROS_ERROR("cv_bridge exception: %s", e.what());
-//         return;
-//     }
-// }
 
 // Service function to save the images
 bool save(acquisition::save_images::Request &req, acquisition::save_images::Response &res)
 {   
 
+    // Get the service request parameters
+    int img_num = req.img_num;
     std::string left_file_name = req.left_file_name;
     std::string right_file_name = req.right_file_name;
+    
 
+    // Get the left and right images
+    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    // Images are published as ROS topics. The images are received as ROS messages and converted to OpenCV images.
+    //
+    // Get the left image
     cv_bridge::CvImagePtr cv_ptr_left;
     try
     {
@@ -75,6 +53,7 @@ bool save(acquisition::save_images::Request &req, acquisition::save_images::Resp
         return false;
     }
 
+    //Get the right images
     cv_bridge::CvImagePtr cv_ptr_right;
     try
     {
@@ -116,6 +95,30 @@ bool save(acquisition::save_images::Request &req, acquisition::save_images::Resp
     ROS_INFO("Right image saved successfully.");
 
     ROS_INFO("Images saved successfully.");
+
+    // Open the eef_pose file
+    geometry_msgs::PoseStamped eef_pose_msg = req.eef_pose;
+    std::string eef_file_name = req.eef_file_name;
+    std::ofstream eef_pose_file;
+    eef_pose_file.open(eef_file_name, std::ios::app);
+
+    // Save the eef_pose to file
+    char buffer[25];
+    sprintf(buffer, "%04d", img_num);
+    eef_pose_file
+        << eef_pose_msg.header.stamp.sec << "." << eef_pose_msg.header.stamp.nsec << ","
+        << eef_pose_msg.header.frame_id << ","
+        << buffer << ","
+        << eef_pose_msg.pose.position.x << ","
+        << eef_pose_msg.pose.position.y << ","
+        << eef_pose_msg.pose.position.z << ","
+        << eef_pose_msg.pose.orientation.x << ","
+        << eef_pose_msg.pose.orientation.y << ","
+        << eef_pose_msg.pose.orientation.z << ","
+        << eef_pose_msg.pose.orientation.w 
+        << "\n";
+    eef_pose_file.close();
+
     res.success = true;
     return true;
 }
@@ -130,14 +133,6 @@ int main(int argc, char **argv)
     // Advertising the service and passing through the node handle
     ros::ServiceServer service = node_handle.advertiseService("save_images", save);
     ROS_INFO("Ready to save images.");
-
-    // // Subscribing to the topic and setting up the image transport for the left camera
-    // image_transport::ImageTransport it_left(node_handle);
-    // image_transport::Subscriber sub_camLeft = it_left.subscribe("camLeft/image_color", 1, camLeftCallback);
-
-    // // Subscribing to the topic and setting up the image transport for the right camera
-    // image_transport::ImageTransport it_right(node_handle);
-    // image_transport::Subscriber sub_camRight = it_right.subscribe("camRight/image_color", 1, camRightCallback);
 
     // Spinning the node
     ros::spin();

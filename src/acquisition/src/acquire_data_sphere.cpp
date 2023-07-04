@@ -10,6 +10,11 @@
 #include <moveit_visual_tools/moveit_visual_tools.h>
 #include <acquisition/save_images.h>
 #include <cstdlib>
+#include <iostream>
+#include <fstream>
+#include <filesystem>
+#include <sensor_msgs/CameraInfo.h>
+#include <geometry_msgs/PoseStamped.h>
 
 
 
@@ -26,6 +31,37 @@
 const double tau = 2 * M_PI;
 //The golden ratio constant:
 const double GR = (1 + sqrt(5)) / 2;
+
+//Define save camera info function
+void saveCameraInfo(const sensor_msgs::CameraInfoConstPtr& msg, std::string file_name)
+{
+  std::ofstream cam_info;
+    cam_info.open(file_name);
+    cam_info << "Timestamp:," << msg->header.stamp.sec <<"\n"
+             << "Frame ID:," << msg->header.frame_id << "\n"
+             << "Height:," << msg->height << "\n"
+             << "Width:," << msg->width << "\n"
+             << "Distortion model:," << msg->distortion_model << "\n"
+             << "D:,";
+    for (auto i : msg->D)
+      cam_info << i << ",";
+    cam_info << "\n"
+             << "K:,";
+    for (auto i : msg->K)
+      cam_info << i << ",";
+    cam_info << "\n"
+             << "R:,";
+    for (auto i : msg->R)
+      cam_info << i << ",";
+    cam_info << "\n"
+             << "P:,";
+    for (auto i : msg->P)
+      cam_info << i << ",";
+    cam_info << "\n" <<"Bin X:," << msg->binning_x << "\n"
+             << "Bin Y:," << msg->binning_y << "\n";
+    // // Close txt file
+    cam_info.close();
+}
 
 int main(int argc, char** argv)
 {
@@ -117,19 +153,45 @@ int main(int argc, char** argv)
     capture_data = false;
   }
 
-  // If capturing sata then create dataset folder
+  // If capturing data then create dataset folder using filesystem
   if (capture_data)
   {
     // Create a folder for the dataset
-    std::string dataset_folder = "/home/alex/data/dataset";
-    std::string dataset_name = "dataset_" + std::to_string(time(NULL));
-    std::string dataset_path = dataset_folder + "/" + dataset_name;
-    std::string command = "mkdir " + dataset_path;
-    system(command.c_str());
-    // Set the dataset path in the parameter server
-    ros::param::set("/dataset_path", dataset_path);
+    std::string dataset_folder = node_handle.param("/dataset_folder", std::string("/home/alex/data"));
+    std::filesystem::create_directory(dataset_folder);
+    // Create a folder for the current dataset
+    std::string current_dataset_folder = dataset_folder + "/dataset_" + std::to_string(std::time(0));
+    std::filesystem::create_directory(current_dataset_folder);
+    // Assign current dataset folder to parameter server
+    ros::param::set("/current_dataset_folder", current_dataset_folder);
+
+    // Create a folder for the left camera images
+    std::string left_folder = current_dataset_folder + "/left";
+    std::filesystem::create_directory(left_folder);
+    // Assign left folder to parameter server
+    ros::param::set("/left_folder", left_folder);
+    // Save left camera parameters (topic /camLeft/camera_info) to file in left folder
+    auto left_cam_info = ros::topic::waitForMessage<sensor_msgs::CameraInfo>("/camLeft/camera_info", ros::Duration(5.0));
+    saveCameraInfo(left_cam_info, left_folder + "/camera_info.csv");
+
+    // Create a folder for the right camera images
+    std::string right_folder = current_dataset_folder + "/right";
+    std::filesystem::create_directory(right_folder);
+    // Assign right folder to parameter server
+    ros::param::set("/right_folder", right_folder);
+    // Save right camera parameters (topic /camRight/camera_info) to file in right folder
+    auto right_cam_info = ros::topic::waitForMessage<sensor_msgs::CameraInfo>("/camRight/camera_info", ros::Duration(5.0));
+    saveCameraInfo(right_cam_info, right_folder + "/camera_info.csv");
+
+    //Create end effector pose csv file
+    std::string eef_file_name = current_dataset_folder + "/eef_pose.csv";
+    // Assign eef file name to parameter server
+    ros::param::set("/eef_file_name", eef_file_name);
+    std::ofstream eef_file;
+    eef_file.open(eef_file_name);
+    eef_file << "time,img,frame id,x,y,z,qx,qy,qz,qw\n";
+    eef_file.close();
   }
-  
   
   // Visualization
   // ^^^^^^^^^^^^^
@@ -150,7 +212,7 @@ int main(int argc, char** argv)
   text_pose.translation().z() = 1.0;
   visual_tools.publishText(text_pose, "Acquire data sphere", rvt::WHITE, rvt::XLARGE);
   Eigen::Isometry3d text_pose2 = Eigen::Isometry3d::Identity();
-  text_pose2.translation().z() = 0.8;
+  text_pose2.translation().z() = 0.5;
   
   // Batch publishing is used to reduce the number of messages being sent to RViz for large visualizations
   visual_tools.trigger();
@@ -243,7 +305,7 @@ int main(int argc, char** argv)
     visual_tools.publishAxisLabeled(target_poses[i], "pose" + std::to_string(i));
     visual_tools.publishText(text_pose, "Pose Goal" + std::to_string(i), rvt::WHITE, rvt::XLARGE);
     visual_tools.trigger();
-
+    
     //Wait for user input
     visual_tools.prompt("Press 'next' in the RvizVisualToolsGui window to move the robot");
     visual_tools.trigger();
@@ -265,8 +327,22 @@ int main(int argc, char** argv)
     {
       //Create request
       acquisition::save_images srv;
-      srv.request.left_file_name = "/home/alex/data/left" + std::to_string(i) + ".png";
-      srv.request.right_file_name = "/home/alex/data/right" + std::to_string(i) + ".png";
+
+      // Get left and right file names using the parameter server
+      std::string left_folder;
+      node_handle.getParam("/left_folder", left_folder);
+      std::string right_folder;
+      node_handle.getParam("/right_folder", right_folder);
+      std::string eef_file_name;
+      node_handle.getParam("/eef_file_name", eef_file_name);
+
+      // Service request
+      srv.request.img_num  = i;
+      srv.request.left_file_name = left_folder + "/" + std::to_string(i) + ".png";
+      srv.request.right_file_name = right_folder + "/" + std::to_string(i) + ".png";
+      srv.request.eef_file_name = eef_file_name;
+      srv.request.eef_pose = move_group_interface.getCurrentPose();
+
       // Call the service
       if (client.call(srv))
       {

@@ -25,11 +25,19 @@
     <arg name="robot_name" default="my_$(arg arm)"/>
     <arg name="prefix" default=""/>
 
+    <!-- Capture configuration -->
+    <arg name="N" default="32"/> <!-- Number of images to capture -->
+    <arg name="sample_rad" default="0.1"/> <!-- Radius of the sphere -->
+    <arg name="sample_point" default="{0.5,0.0,0.0}"/> <!-- Center of the sphere -->
+    <arg name="capture" default="true"/> <!-- True if you want to capture images -->
+    <arg name="dataset_file_path" default="/home/alex/data"/> <!-- Path to the dataset folder -->
+
     <!-- Make parameters for acquire data sphere -->
-    <param name="N" value="32"/>
-    <param name="sample_rad" value="0.1"/>
-    <param name="sample_point" value="{0.5,0.0,0.0}"/>
-    <param name="capture" value="true"/>
+    <param name="N" value="$(arg N)"/>
+    <param name="sample_rad" value="$(arg sample_rad)"/>
+    <param name="sample_point" value="$(arg sample_point)"/>
+    <param name="capture" value="$(arg capture)"/>
+    <param name="dataset_file_path" value="$(arg dataset_file_path)"/>
 
    
     <!-- Start robot launch files -->
@@ -59,7 +67,7 @@
     <include file="$(find spinnaker_camera_driver)/launch/camera.launch" if="$(eval arg('rgb_vision'))">
         <arg name="camera_name" value="$(arg left_camera_name)"/>
         <arg name="camera_serial" value="$(arg left_camera_serial)"/>
-        <arg name="isp_enable" value="False" /> 
+        <arg name="isp_enable" value="True" /> 
         <arg name="encoding" value="BayerRG8" />
         <arg name="color_balance" value="Once" /> 
         <arg name="control_frame_rate" value="$(arg set_frame_rate)"/>
@@ -69,7 +77,7 @@
     <include file="$(find spinnaker_camera_driver)/launch/camera.launch" if="$(eval arg('rgb_vision'))">
         <arg name="camera_name" value="$(arg right_camera_name)"/>
         <arg name="camera_serial" value="$(arg right_camera_serial)"/>
-        <arg name="isp_enable" value="False" /> 
+        <arg name="isp_enable" value="True" /> 
         <arg name="encoding" value="BayerRG8" />
         <arg name="color_balance" value="Once" /> 
         <arg name="control_frame_rate" value="$(arg set_frame_rate)"/>
@@ -80,6 +88,6 @@
     <node pkg="acquisition" type="save_images_server" name="save_images_server" respawn="true" output="screen"/>
 
     <!-- Launch acquire data sphere node -->
-    <node pkg="acquisition" type="acquire_data_sphere" name="acquire_data_sphere" respawn="true" ns="my_gen3" output="screen"/>
+    <node pkg="acquisition" type="acquire_data_sphere" name="acquire_data_sphere" respawn="true" ns="my_gen3" output="screen" if="$(eval arg('rgb_vision'))"/>
     
 </launch>
