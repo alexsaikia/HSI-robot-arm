@@ -54,6 +54,15 @@
         <joint name="$(arg prefix)joint_6" value="0" />
         <joint name="$(arg prefix)joint_7" value="0" />
     </group_state>
+    <group_state name="compatible_vertical" group="arm">
+        <joint name="$(arg prefix)joint_1" value="0" />
+        <joint name="$(arg prefix)joint_2" value="0" />
+        <joint name="$(arg prefix)joint_3" value="3.14" />
+        <joint name="$(arg prefix)joint_4" value="0" />
+        <joint name="$(arg prefix)joint_5" value="0" />
+        <joint name="$(arg prefix)joint_6" value="0" />
+        <joint name="$(arg prefix)joint_7" value="1.57" />
+    </group_state>
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="$(arg prefix)bracelet_link" link2="$(arg prefix)forearm_link" reason="Never" />
     <disable_collisions link1="$(arg prefix)bracelet_link" link2="$(arg prefix)spherical_wrist_1_link" reason="Never" />

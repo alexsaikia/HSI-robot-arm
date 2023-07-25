@@ -98,9 +98,9 @@
                 <!-- Add top plate link and joint -->
                 <link name="${prefix}top_plate_link">
                     <visual>
-                        <origin xyz="0 0 0" rpy="0 0 0" />
+                        <origin xyz="0 0 0" rpy="0 0 0.003" />
                         <geometry>
-                        <mesh filename="package://kortex_description/arms/gen3/${dof}dof/meshes/top_plate_link.stl" />
+                        <box size="0.2 0.2 0.003"/>
                         </geometry>
                         <material name="">
                         <color rgba="0.0 0.3 0.3 1" />
