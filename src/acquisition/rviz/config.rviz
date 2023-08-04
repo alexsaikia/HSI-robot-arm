@@ -6,12 +6,10 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
+        - /PlanningScene1
         - /PlanningScene1/Scene Robot1
-        - /PlanningScene1/Scene Robot1/Links1
-        - /PlanningScene1/Scene Robot1/Links1/camera_link1
-        - /PlanningScene1/Scene Robot1/Links1/end_effector_link1
       Splitter Ratio: 0.5
-    Tree Height: 1331
+    Tree Height: 2091
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -59,7 +57,7 @@ Visualization Manager:
       Value: true
     - Acceleration_Scaling_Factor: 0.7
       Class: moveit_rviz_plugin/MotionPlanning
-      Enabled: true
+      Enabled: false
       Move Group Namespace: ""
       MoveIt_Allow_Approximate_IK: false
       MoveIt_Allow_External_Program: false
@@ -88,73 +86,6 @@ Visualization Manager:
           Expand Link Details: false
           Expand Tree: false
           Link Tree Style: Links in Alphabetic Order
-          adapter_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          base_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          bracelet_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          camera_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          end_effector_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          forearm_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          half_arm_1_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          half_arm_2_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          mounting_plate_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          shoulder_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          spherical_wrist_1_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          spherical_wrist_2_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          tool_frame:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          top_plate_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
         Loop Animation: false
         Robot Alpha: 0.5
         Robot Color: 150; 50; 150
@@ -201,77 +132,10 @@ Visualization Manager:
           Expand Link Details: false
           Expand Tree: false
           Link Tree Style: Links in Alphabetic Order
-          adapter_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          base_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          bracelet_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          camera_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          end_effector_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          forearm_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          half_arm_1_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          half_arm_2_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          mounting_plate_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          shoulder_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          spherical_wrist_1_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          spherical_wrist_2_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          tool_frame:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          top_plate_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
         Robot Alpha: 1
         Show Robot Collision: false
         Show Robot Visual: true
-      Value: true
+      Value: false
       Velocity_Scaling_Factor: 0.7
     - Class: moveit_rviz_plugin/PlanningScene
       Enabled: true
@@ -311,11 +175,16 @@ Visualization Manager:
             Value: true
           camera_link:
             Alpha: 1
-            Show Axes: true
+            Show Axes: false
             Show Trail: false
+          camera_plate_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           end_effector_link:
             Alpha: 1
-            Show Axes: true
+            Show Axes: false
             Show Trail: false
           forearm_link:
             Alpha: 1
@@ -332,7 +201,17 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          left_side_bracket_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           mounting_plate_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_side_bracket_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -394,6 +273,11 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        camera_plate_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         end_effector_link:
           Alpha: 1
           Show Axes: false
@@ -413,7 +297,17 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        left_side_bracket_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         mounting_plate_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_side_bracket_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -485,7 +379,6 @@ Visualization Manager:
       Name: MarkerArray
       Namespaces:
         Text: true
-        pose3: true
       Queue Size: 100
       Value: true
   Enabled: true
@@ -516,7 +409,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.69453763961792
+      Distance: 0.6004384756088257
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -524,17 +417,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: 0.15699659287929535
-        Y: 0.17684879899024963
-        Z: 0.20564277470111847
+        X: 0.005531221628189087
+        Y: -0.042377837002277374
+        Z: 1.2101958990097046
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.07039821892976761
+      Pitch: 0.04539845883846283
       Target Frame: <Fixed Frame>
-      Yaw: 5.975387096405029
+      Yaw: 4.823575019836426
     Saved: ~
 Window Geometry:
   Displays:
@@ -548,7 +441,7 @@ Window Geometry:
     collapsed: false
   MotionPlanning - Trajectory Slider:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd00000004000000000000036a000009cbfc020000000ffb0000001200530065006c0065006300740069006f006e00000001e10000009b000000ab00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000adfb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730100000069000006210000017800fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb000000280020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720100000688000000850000000000000000fb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e00670100000696000003220000028e00fffffffb000000280020002d0020005400720061006a006500630074006f0072007900200053006c006900640065007200000009c4000000700000000000000000fb000000100044006900730070006c00610079007302000003dd000008000000036a0000017afb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000002100000021fb0000003c005400720061006a006500630074006f007200790020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000002100000021fb00000024005200760069007a00560069007300750061006c0054006f006f006c007300470075006901000009c4000000700000007000ffffff0000000100000925000009cbfc0200000004fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a0049006d0061006700650100000069000004c40000002100fffffffc00000539000004fb0000015801000034fa000000000100000002fb0000000a0049006d0061006700650100000000ffffffff0000008c00fffffffb0000000a005600690065007700730100000c9c000006cc0000014f00fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000136800000057fc0100000002fb0000000800540069006d0065010000000000001368000005a600fffffffb0000000800540069006d00650100000000000004500000000000000000000006c1000009cb00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000004000000000000036a000009cbfc020000000ffb0000001200530065006c0065006300740069006f006e00000001e10000009b000000ab00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000adfb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730100000069000009190000017800fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb000000280020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720100000688000000850000000000000000fb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e00670000000696000003220000028e00fffffffb000000280020002d0020005400720061006a006500630074006f0072007900200053006c006900640065007200000009c4000000700000000000000000fb000000100044006900730070006c00610079007302000003dd000008000000036a0000017afb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000002100000021fb0000003c005400720061006a006500630074006f007200790020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000002100000021fb00000024005200760069007a00560069007300750061006c0054006f006f006c0073004700750069010000098e000000a60000007000ffffff0000000100000653000009cbfc0200000004fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a0049006d0061006700650100000069000004c40000002100fffffffc00000539000004fb0000015801000034fa000000000100000002fb0000000a0049006d0061006700650100000000ffffffff0000008c00fffffffb0000000a005600690065007700730100000c9c000006cc0000014f00fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000136800000057fc0100000002fb0000000800540069006d0065010000000000001368000005a600fffffffb0000000800540069006d0065010000000000000450000000000000000000000993000009cb00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   RvizVisualToolsGui:
     collapsed: false
   Selection:

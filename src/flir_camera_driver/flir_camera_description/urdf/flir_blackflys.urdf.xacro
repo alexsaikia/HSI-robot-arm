@@ -20,7 +20,10 @@
             <geometry>
                 <mesh filename="package://flir_camera_description/meshes/flir_blackflys.stl"/>
             </geometry>
-            <material name="dark_grey" />
+            <material name="">
+                <color rgba="0.1 0.1 0.1 1" />
+            </material>
+            <!-- <material name="dark_grey" /> -->
         </visual>
         <collision>
             <origin xyz="0.003 0 ${camera_z/2}" rpy="0 0 0" />
@@ -40,7 +43,10 @@
             <geometry>
             <cylinder radius="${lens_r}" length="${lens_h}"/>
             </geometry>
-            <material name="dark_grey" />
+            <material name="">
+                <color rgba="0.2 0.2 0.2 1" />
+            </material>
+            <!-- <material name="dark_grey" /> -->
         </visual>
         <collision>
             <origin xyz="${lens_h/2} 0 0" rpy="0 1.5707 0" />
