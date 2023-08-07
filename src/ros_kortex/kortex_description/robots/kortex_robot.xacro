@@ -106,6 +106,29 @@
                     <axis xyz="0 0 0" />
                 </joint>
 
+                <!-- Add extrusion parts -->
+                <link name="extrusion_link">
+                    <visual>
+                        <geometry>
+                            <box size="0.40 0.3 0.045"/>
+                        </geometry>
+                        <material name="">
+                            <color rgba="0.6 0.6 0.6 1"/>
+                        </material>
+                    </visual>
+                    <collision>
+                        <geometry>
+                            <box size="0.40 0.3 0.045"/>
+                        </geometry>
+                    </collision>
+                </link>
+                <joint name="${prefix}extrusion_joint" type="fixed">
+                    <origin xyz="0.05 0 -0.024" rpy="0 0 0" />
+                    <parent link="${prefix}kinova_plate_link" />
+                    <child link="${prefix}extrusion_link" />
+                    <axis xyz="0 0 0" />
+                </joint>
+
                 <!-- Add adapter link and joint -->
                 <link name="${prefix}adapter_link">
                     <visual>
@@ -125,7 +148,7 @@
                     </collision>
                 </link>
                 <joint name="${prefix}adapter_joint" type="fixed">
-                    <origin xyz="0 0 0.003" rpy="0 0 0" />
+                    <origin xyz="0 0 0.003" rpy="0 0 ${pi}" />
                     <child link="${prefix}adapter_link" />
                     <parent link="${prefix}tool_frame" />
                     <axis xyz="0 0 0" />
@@ -230,7 +253,7 @@
 
                 <!-- Add cameras -->
                 <xacro:include filename="$(find flir_camera_description)/urdf/flir_blackflys.urdf.xacro" />
-                <xacro:flir_blackflys name="camLeft" frame="${prefix}left_camera_link" />
+                <xacro:flir_blackflys name="left_camera" frame="${prefix}left_camera_link" />
 
                 <joint name="${prefix}left_camera_joint" type="fixed">
                     <origin xyz="0.02 0.01565 0" rpy="${pi} 0 ${pi/2}" />
@@ -239,7 +262,7 @@
                     <axis xyz="0 0 0" />
                 </joint>
 
-                <xacro:flir_blackflys name="camRight" frame="${prefix}right_camera_link" />
+                <xacro:flir_blackflys name="right_camera" frame="${prefix}right_camera_link" />
 
                 <joint name="${prefix}right_camera_joint" type="fixed">
                     <origin xyz="-0.02 0.01565 0" rpy="${pi} 0 ${pi/2}" />

@@ -80,6 +80,32 @@
     <disable_collisions link1="$(arg prefix)shoulder_link" link2="$(arg prefix)adapter_link" reason="Never" />
     <disable_collisions link1="$(arg prefix)base_link" link2="$(arg prefix)adapter_link" reason="Never" />
 
+    <!-- Disable collisions for the left camera links and the lenses -->
+    <disable_collisions link1="$(arg prefix)left_camera_link" link2="$(arg prefix)left_camera_link_lens" reason="Adjacent" />
+    <disable_collisions link1="$(arg prefix)left_camera_link" link2="$(arg prefix)left_camera_link_optical" reason="Adjacent" />
+    <disable_collisions link1="$(arg prefix)left_camera_link_lens" link2="$(arg prefix)left_camera_link_optical" reason="Adjacent" />
+    <!-- Disable collisions for the right camera links and lenses -->
+    <disable_collisions link1="$(arg prefix)right_camera_link" link2="$(arg prefix)right_camera_link_lens" reason="Adjacent" />
+    <disable_collisions link1="$(arg prefix)right_camera_link" link2="$(arg prefix)right_camera_link_optical" reason="Adjacent" />
+    <disable_collisions link1="$(arg prefix)right_camera_link_lens" link2="$(arg prefix)right_camera_link_optical" reason="Adjacent" />
+
+    <!-- Disable collisions for the plates and cameras-->
+    <disable_collisions link1="$(arg prefix)camera_plate_link" link2="$(arg prefix)top_plate_link" reason="Never" />  
+    <disable_collisions link1="$(arg prefix)camera_plate_link" link2="$(arg prefix)left_camera_link" reason="Adjacent" />
+    <disable_collisions link1="$(arg prefix)camera_plate_link" link2="$(arg prefix)right_camera_link" reason="Adjacent" />
+    <disable_collisions link1="$(arg prefix)top_plate_link" link2="$(arg prefix)left_camera_link" reason="Never" />
+    <disable_collisions link1="$(arg prefix)top_plate_link" link2="$(arg prefix)right_camera_link" reason="Never" />
+
+    <!-- Mounting plate collision disable -->
+    <disable_collisions link1="$(arg prefix)mounting_plate_link" link2="$(arg prefix)adapter_link" reason="Never" />
+    <disable_collisions link1="$(arg prefix)mounting_plate_link" link2="$(arg prefix)bracelet_link" reason="Never" />
+    <disable_collisions link1="$(arg prefix)mounting_plate_link" link2="$(arg prefix)base_link" reason="Adjacent" />
+    <disable_collisions link1="$(arg prefix)spherical_wrist_2_link" link2="$(arg prefix)mounting_plate_link" reason="Never" />
+    <disable_collisions link1="$(arg prefix)spherical_wrist_1_link" link2="$(arg prefix)mounting_plate_link" reason="Never" />
+    <disable_collisions link1="$(arg prefix)forearm_link" link2="$(arg prefix)mounting_plate_link" reason="Never" />
+    <disable_collisions link1="$(arg prefix)kinova_plate_link" link2="$(arg prefix)mounting_plate_link" reason="Never" />  
+
+
     <disable_collisions link1="$(arg prefix)forearm_link" link2="$(arg prefix)half_arm_1_link" reason="Never" />
     <disable_collisions link1="$(arg prefix)forearm_link" link2="$(arg prefix)half_arm_2_link" reason="Adjacent" />
     <disable_collisions link1="$(arg prefix)forearm_link" link2="$(arg prefix)shoulder_link" reason="Never" />
@@ -98,14 +124,6 @@
     <disable_collisions link1="$(arg prefix)shoulder_link" link2="$(arg prefix)spherical_wrist_1_link" reason="Never" />
     <disable_collisions link1="$(arg prefix)shoulder_link" link2="$(arg prefix)spherical_wrist_2_link" reason="Never" />
     <disable_collisions link1="$(arg prefix)shoulder_link" link2="$(arg prefix)base_link" reason="Adjacent" />
-    <!-- Mounting plate collision disable -->
-    <disable_collisions link1="$(arg prefix)mounting_plate_link" link2="$(arg prefix)adapter_link" reason="Never" />
-    <disable_collisions link1="$(arg prefix)mounting_plate_link" link2="$(arg prefix)bracelet_link" reason="Never" />
-    <disable_collisions link1="$(arg prefix)mounting_plate_link" link2="$(arg prefix)base_link" reason="Adjacent" />
-    <disable_collisions link1="$(arg prefix)spherical_wrist_2_link" link2="$(arg prefix)mounting_plate_link" reason="Never" />
-    <disable_collisions link1="$(arg prefix)spherical_wrist_1_link" link2="$(arg prefix)mounting_plate_link" reason="Never" />
-    <disable_collisions link1="$(arg prefix)forearm_link" link2="$(arg prefix)mounting_plate_link" reason="Never" />
-
     <disable_collisions link1="$(arg prefix)shoulder_link" link2="$(arg prefix)base_link" reason="Adjacent" />
     <disable_collisions link1="$(arg prefix)spherical_wrist_1_link" link2="$(arg prefix)spherical_wrist_2_link" reason="Adjacent" />
 </robot>
