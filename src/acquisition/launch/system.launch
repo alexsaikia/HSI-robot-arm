@@ -12,10 +12,10 @@
     <arg name="use_hard_limits" default="false"/> <!-- Set soft limits as hard limits (Gen3 only) -->
 
     <!-- Camera configuration -->
-    <arg name="left_camera_name" default="camLeft"/> <!--Left camera name-->
+    <arg name="left_camera_name" default="left_camera"/> <!--Left camera name-->
     <!-- <arg name="left_camera_serial" default="19440080"/> Left MONO camera serial number -->
     <arg name="left_camera_serial" default="22423944"/> <!--Left RGB camera serial number-->
-    <arg name="right_camera_name" default="camRight"/> <!--Right camera name-->
+    <arg name="right_camera_name" default="right_camera"/> <!--Right camera name-->
     <!-- <arg name="right_camera_serial" default="19440078"/> Right MONO camera serial number -->
     <arg name="right_camera_serial" default="22423939"/> <!--Right RGB camera serial number-->
     <arg name="set_frame_rate" default="true"/> <!--Enable set frame rate. If false camera will acquire maximum number of frames-->

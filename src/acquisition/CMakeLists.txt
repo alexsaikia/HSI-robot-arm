@@ -152,9 +152,16 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(move_group_interface_test src/move_group_interface_test.cpp)
 target_link_libraries(move_group_interface_test ${catkin_LIBRARIES})
+add_dependencies(move_group_interface_test ${PROJECT_NAME}_generate_messages_cpp)
+
 add_executable(acquire_data_sphere src/acquire_data_sphere.cpp)
 target_link_libraries(acquire_data_sphere ${catkin_LIBRARIES})
 add_dependencies(acquire_data_sphere ${PROJECT_NAME}_generate_messages_cpp)
+
+add_executable(safety_obstacles src/safety_obstacles.cpp)
+target_link_libraries(safety_obstacles ${catkin_LIBRARIES})
+add_dependencies(safety_obstacles ${PROJECT_NAME}_generate_messages_cpp)
+
 add_executable(save_images_server src/save_images_server.cpp)
 target_link_libraries(save_images_server ${catkin_LIBRARIES})
 add_dependencies(save_images_server ${PROJECT_NAME}_generate_messages_cpp)

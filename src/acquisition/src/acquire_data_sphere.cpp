@@ -27,6 +27,7 @@
 //sample_point: center of the sphere
 
 
+
 // The circle constant tau = 2*pi. One tau is one rotation in radians
 const double tau = 2 * M_PI;
 //The golden ratio constant:
@@ -170,8 +171,8 @@ int main(int argc, char** argv)
     std::filesystem::create_directory(left_folder);
     // Assign left folder to parameter server
     ros::param::set("/left_folder", left_folder);
-    // Save left camera parameters (topic /camLeft/camera_info) to file in left folder
-    auto left_cam_info = ros::topic::waitForMessage<sensor_msgs::CameraInfo>("/camLeft/camera_info", ros::Duration(5.0));
+    // Save left camera parameters (topic /left_camera/camera_info) to file in left folder
+    auto left_cam_info = ros::topic::waitForMessage<sensor_msgs::CameraInfo>("/left_camera/camera_info", ros::Duration(5.0));
     saveCameraInfo(left_cam_info, left_folder + "/camera_info.csv");
 
     // Create a folder for the right camera images
@@ -179,8 +180,8 @@ int main(int argc, char** argv)
     std::filesystem::create_directory(right_folder);
     // Assign right folder to parameter server
     ros::param::set("/right_folder", right_folder);
-    // Save right camera parameters (topic /camRight/camera_info) to file in right folder
-    auto right_cam_info = ros::topic::waitForMessage<sensor_msgs::CameraInfo>("/camRight/camera_info", ros::Duration(5.0));
+    // Save right camera parameters (topic /right_camera/camera_info) to file in right folder
+    auto right_cam_info = ros::topic::waitForMessage<sensor_msgs::CameraInfo>("/right_camera/camera_info", ros::Duration(5.0));
     saveCameraInfo(right_cam_info, right_folder + "/camera_info.csv");
 
     //Create end effector pose csv file

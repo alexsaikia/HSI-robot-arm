@@ -43,7 +43,7 @@ bool save(acquisition::save_images::Request &req, acquisition::save_images::Resp
     cv_bridge::CvImagePtr cv_ptr_left;
     try
     {
-        auto left_img_msg = ros::topic::waitForMessage<sensor_msgs::Image>("/camLeft/image_color", ros::Duration(5));
+        auto left_img_msg = ros::topic::waitForMessage<sensor_msgs::Image>("/left_camera/image_color", ros::Duration(5));
         cv_ptr_left = cv_bridge::toCvCopy(left_img_msg, sensor_msgs::image_encodings::BGR8);
         g_left_image = cv_ptr_left->image;
     }

@@ -351,7 +351,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /camLeft/image_color
+      Image Topic: /left_camera/image_color
       Max Value: 1
       Median window: 5
       Min Value: 0
@@ -363,7 +363,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /camRight/image_color
+      Image Topic: /right_camera/image_color
       Max Value: 1
       Median window: 5
       Min Value: 0
