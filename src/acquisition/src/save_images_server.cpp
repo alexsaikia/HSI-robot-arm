@@ -28,13 +28,11 @@ cv::Mat g_right_image;
 // Service function to save the images
 bool save(acquisition::save_images::Request &req, acquisition::save_images::Response &res)
 {   
-
     // Get the service request parameters
     int img_num = req.img_num;
     std::string left_file_name = req.left_file_name;
     std::string right_file_name = req.right_file_name;
     
-
     // Get the left and right images
     // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     // Images are published as ROS topics. The images are received as ROS messages and converted to OpenCV images.
@@ -42,7 +40,7 @@ bool save(acquisition::save_images::Request &req, acquisition::save_images::Resp
     // Get the left image
     cv_bridge::CvImagePtr cv_ptr_left;
     try
-    {
+    {   
         auto left_img_msg = ros::topic::waitForMessage<sensor_msgs::Image>("/left_camera/image_color", ros::Duration(5));
         cv_ptr_left = cv_bridge::toCvCopy(left_img_msg, sensor_msgs::image_encodings::BGR8);
         g_left_image = cv_ptr_left->image;
@@ -56,8 +54,8 @@ bool save(acquisition::save_images::Request &req, acquisition::save_images::Resp
     //Get the right images
     cv_bridge::CvImagePtr cv_ptr_right;
     try
-    {
-        auto right_img_msg = ros::topic::waitForMessage<sensor_msgs::Image>("/camRight/image_color", ros::Duration(5));
+    {   
+        auto right_img_msg = ros::topic::waitForMessage<sensor_msgs::Image>("/right_camera/image_color", ros::Duration(5));
         cv_ptr_right = cv_bridge::toCvCopy(right_img_msg, sensor_msgs::image_encodings::BGR8);
         g_right_image = cv_ptr_right->image;
     }

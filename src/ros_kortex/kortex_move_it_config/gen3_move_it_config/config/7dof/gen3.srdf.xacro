@@ -39,6 +39,15 @@
         <joint name="$(arg prefix)joint_6" value="0.96" />
         <joint name="$(arg prefix)joint_7" value="1.57" />
     </group_state>
+    <group_state name="horizontal_home" group="arm">
+        <joint name="$(arg prefix)joint_1" value="0" />
+        <joint name="$(arg prefix)joint_2" value="0.26" />
+        <joint name="$(arg prefix)joint_3" value="3.14" />
+        <joint name="$(arg prefix)joint_4" value="-2.27" />
+        <joint name="$(arg prefix)joint_5" value="0" />
+        <joint name="$(arg prefix)joint_6" value="-0.59" />
+        <joint name="$(arg prefix)joint_7" value="1.57" />
+    </group_state>
     <group_state name="retract" group="arm">
         <joint name="$(arg prefix)joint_1" value="0" />
         <joint name="$(arg prefix)joint_2" value="-0.35" />
@@ -80,6 +89,27 @@
     <disable_collisions link1="$(arg prefix)shoulder_link" link2="$(arg prefix)adapter_link" reason="Never" />
     <disable_collisions link1="$(arg prefix)base_link" link2="$(arg prefix)adapter_link" reason="Never" />
 
+    <!-- Disable collisions for the bracelet link and all the camera and lense links -->
+    <disable_collisions link1="$(arg prefix)bracelet_link" link2="$(arg prefix)left_camera_link" reason="Never" />
+    <disable_collisions link1="$(arg prefix)bracelet_link" link2="$(arg prefix)right_camera_link" reason="Never" />
+    <disable_collisions link1="$(arg prefix)bracelet_link" link2="$(arg prefix)left_camera_link_lens" reason="Never" />
+    <disable_collisions link1="$(arg prefix)bracelet_link" link2="$(arg prefix)right_camera_link_lens" reason="Never" />
+    <disable_collisions link1="$(arg prefix)bracelet_link" link2="$(arg prefix)left_camera_link_optical" reason="Never" />
+    <disable_collisions link1="$(arg prefix)bracelet_link" link2="$(arg prefix)right_camera_link_optical" reason="Never" />
+    <disable_collisions link1="$(arg prefix)bracelet_link" link2="$(arg prefix)camera_plate_link" reason="Never" />
+    <disable_collisions link1="$(arg prefix)bracelet_link" link2="$(arg prefix)top_plate_link" reason="Never" />
+
+    <!-- Disable collisions for the spherical wrist 2 link -->
+    <disable_collisions link1="$(arg prefix)spherical_wrist_2_link" link2="$(arg prefix)left_camera_link" reason="Never" />
+    <disable_collisions link1="$(arg prefix)spherical_wrist_2_link" link2="$(arg prefix)right_camera_link" reason="Never" />
+    <disable_collisions link1="$(arg prefix)spherical_wrist_2_link" link2="$(arg prefix)left_camera_link_lens" reason="Never" />
+    <disable_collisions link1="$(arg prefix)spherical_wrist_2_link" link2="$(arg prefix)right_camera_link_lens" reason="Never" />
+    <disable_collisions link1="$(arg prefix)spherical_wrist_2_link" link2="$(arg prefix)left_camera_link_optical" reason="Never" />
+    <disable_collisions link1="$(arg prefix)spherical_wrist_2_link" link2="$(arg prefix)right_camera_link_optical" reason="Never" />
+    <disable_collisions link1="$(arg prefix)spherical_wrist_2_link" link2="$(arg prefix)camera_plate_link" reason="Never" />
+    <disable_collisions link1="$(arg prefix)spherical_wrist_2_link" link2="$(arg prefix)top_plate_link" reason="Never" />
+
+
     <!-- Disable collisions for the left camera links and the lenses -->
     <disable_collisions link1="$(arg prefix)left_camera_link" link2="$(arg prefix)left_camera_link_lens" reason="Adjacent" />
     <disable_collisions link1="$(arg prefix)left_camera_link" link2="$(arg prefix)left_camera_link_optical" reason="Adjacent" />
@@ -95,7 +125,14 @@
     <disable_collisions link1="$(arg prefix)camera_plate_link" link2="$(arg prefix)right_camera_link" reason="Adjacent" />
     <disable_collisions link1="$(arg prefix)top_plate_link" link2="$(arg prefix)left_camera_link" reason="Never" />
     <disable_collisions link1="$(arg prefix)top_plate_link" link2="$(arg prefix)right_camera_link" reason="Never" />
-
+    <!-- Disable collisions between left and right brackets and plates -->
+    <disable_collisions link1="$(arg prefix)left_side_bracket_link" link2="$(arg prefix)top_plate_link" reason="Adjacent" />
+    <disable_collisions link1="$(arg prefix)right_side_bracket_link" link2="$(arg prefix)top_plate_link" reason="Adjacent" />
+    <disable_collisions link1="$(arg prefix)left_side_bracket_link" link2="$(arg prefix)camera_plate_link" reason="Adjacent" />
+    <disable_collisions link1="$(arg prefix)right_side_bracket_link" link2="$(arg prefix)camera_plate_link" reason="Adjacent" />
+    <disable_collisions link1="$(arg prefix)left_side_bracket_link" link2="$(arg prefix)left_camera_link" reason="Adjacent" />
+    <disable_collisions link1="$(arg prefix)right_side_bracket_link" link2="$(arg prefix)right_camera_link" reason="Adjacent" />
+    <disable_collisions link1="$(arg prefix)left_side_bracket_link" link2="$(arg prefix)right_side_bracket_link" reason="Never" />
     <!-- Mounting plate collision disable -->
     <disable_collisions link1="$(arg prefix)mounting_plate_link" link2="$(arg prefix)adapter_link" reason="Never" />
     <disable_collisions link1="$(arg prefix)mounting_plate_link" link2="$(arg prefix)bracelet_link" reason="Never" />
@@ -103,7 +140,9 @@
     <disable_collisions link1="$(arg prefix)spherical_wrist_2_link" link2="$(arg prefix)mounting_plate_link" reason="Never" />
     <disable_collisions link1="$(arg prefix)spherical_wrist_1_link" link2="$(arg prefix)mounting_plate_link" reason="Never" />
     <disable_collisions link1="$(arg prefix)forearm_link" link2="$(arg prefix)mounting_plate_link" reason="Never" />
-    <disable_collisions link1="$(arg prefix)kinova_plate_link" link2="$(arg prefix)mounting_plate_link" reason="Never" />  
+    <disable_collisions link1="$(arg prefix)kinova_plate_link" link2="$(arg prefix)mounting_plate_link" reason="Adjacent" />  
+    <disable_collisions link1="$(arg prefix)mounting_plate_link" link2="$(arg prefix)extrusion_link" reason="Never" />
+    <disable_collisions link1="$(arg prefix)kinova_plate_link" link2="$(arg prefix)extrusion_link" reason="Adjacent" />
 
 
     <disable_collisions link1="$(arg prefix)forearm_link" link2="$(arg prefix)half_arm_1_link" reason="Never" />

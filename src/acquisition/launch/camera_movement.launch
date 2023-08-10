@@ -85,11 +85,10 @@
         <arg name="frame_rate" value="$(arg frame_rate)"/>
     </include>
 
-    <!-- Launch save images server node -->
-    <node pkg="acquisition" type="save_images_server" name="save_images_server" respawn="true" output="screen" />
+    
 
-    <!-- Launch acquire data sphere node -->
-    <node pkg="acquisition" type="acquire_data_sphere" name="acquire_data_sphere" respawn="true" ns="my_gen3" output="screen" if="$(eval arg('rgb_vision'))"/>
+    <!-- Launch camera movement node -->
+    <node pkg="acquisition" type="camera_movement" name="camera_movement" respawn="true" ns="my_gen3" output="screen"/>
 
     <!-- Launch safety obstacles node -->
     <node pkg="acquisition" type="safety_obstacles" name="safety_obstacles" respawn="false" ns="my_gen3" output="screen" if="$(eval arg('obstacle_avoidance'))"/>

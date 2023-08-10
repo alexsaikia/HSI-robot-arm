@@ -65,7 +65,8 @@
         </joint>
 
         <joint name="${frame}_optical_joint" type="fixed">
-        <origin xyz="${lens_h} 0 0" rpy="-1.570796 0 -1.570796" />
+        <!-- Change made here compared to original rpy -pi/2 0 -pi/2 -->
+        <origin xyz="${lens_h} 0 0" rpy="${pi/2} 0 ${pi/2}" />
         <parent link="${frame}_lens" />
         <child link="${frame}_optical" />
         </joint>

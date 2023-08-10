@@ -62,35 +62,46 @@ int main(int argc, char **argv)
     ros::AsyncSpinner spinner(1);
     spinner.start();
 
+    ROS_INFO("Safety Obstacles Node Started");
     // Get and define the planning group
     static const std::string PLANNING_GROUP = "arm";
     moveit::planning_interface::MoveGroupInterface move_group_interface(PLANNING_GROUP);
-
+    ROS_INFO("Reference frame: %s", move_group_interface.getPlanningFrame().c_str());
     // Define the planning scene interface
     moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
-
-    // Raw pointers are frequently used to refer to the planning group for improved performance.
-    const robot_state::JointModelGroup *joint_model_group =
-        move_group_interface.getCurrentState()->getJointModelGroup(PLANNING_GROUP);
-
+    ROS_INFO("Planning frame: %s", move_group_interface.getPlanningFrame().c_str());
+      // Raw pointers are frequently used to refer to the planning group for improved performance.
+    const moveit::core::JointModelGroup* joint_model_group =
+      move_group_interface.getCurrentState()->getJointModelGroup(PLANNING_GROUP);
+    ROS_INFO("Reference frame: %s", move_group_interface.getPlanningFrame().c_str());
+    
     // Create collision objects using make_box()
     std::vector<moveit_msgs::CollisionObject> collision_objects;
     // Create boxes to constrain the movement of the robot and push them to the vector
     // The boxes will act as walls around the robot
-
+    ROS_INFO("Creating collision objects");
     // Create a box to the left of the robot
-    collision_objects.push_back(make_box("left_wall", {0.01, 1.0, 2.0}, {-0.35, 0.0, 1.0}, move_group_interface.getPlanningFrame()));
+    collision_objects.push_back(make_box("left_wall", {2.4, 0.01, 1.0}, {1.0, -0.35, 0.5}, move_group_interface.getPlanningFrame()));
+    ROS_INFO("Collision object 1 created");
     // Create a box to the right of the robot
-    collision_objects.push_back(make_box("right_wall", {0.01, 1.0, 2.0}, {0.35, 0.0, 1.0}, move_group_interface.getPlanningFrame()));
+    collision_objects.push_back(make_box("right_wall", {2.4, 0.01, 1.0}, {1.0, 0.35, 0.5}, move_group_interface.getPlanningFrame()));
+    ROS_INFO("Collision object 2 created");
     // Create a box in front of the robot
-    collision_objects.push_back(make_box("front_wall", {1.0, 0.01, 2.0}, {0.0, 0.35, 1.0}, move_group_interface.getPlanningFrame()));
+    collision_objects.push_back(make_box("front_wall", {0.01, 1.0, 1.0}, {0.8, 0.0, 0.5}, move_group_interface.getPlanningFrame()));
+    ROS_INFO("Collision object 3 created");
     // Create a box behind the robot
-    collision_objects.push_back(make_box("back_wall", {1.0, 0.01, 2.0}, {0.0, -0.15, 1.0}, move_group_interface.getPlanningFrame()));
+    collision_objects.push_back(make_box("back_wall", {0.01, 1.0, 1.0}, {-0.15, 0.0, 0.5}, move_group_interface.getPlanningFrame()));
+    ROS_INFO("Collision object 4 created");
     // Create a box above the robot
-    collision_objects.push_back(make_box("top_wall", {1.0, 1.0, 0.01}, {0.0, 0.0, 0.85}, move_group_interface.getPlanningFrame()));
+    collision_objects.push_back(make_box("top_wall", {2.0, 1.0, 0.01}, {0.5, 0.0, 1.00}, move_group_interface.getPlanningFrame()));
+    ROS_INFO("Collision object 5 created");
+    // Create a box below the robot
+    collision_objects.push_back(make_box("bottom_wall", {2.0, 1.0, 0.01}, {1.0, 0.0, -0.069}, move_group_interface.getPlanningFrame()));
+    ROS_INFO("Collision object 6 created");
 
     // Add the collision objects to the scene
     planning_scene_interface.addCollisionObjects(collision_objects);
+    ROS_INFO("Collision objects added to the scene");
 
 
 

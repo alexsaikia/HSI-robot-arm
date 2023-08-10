@@ -165,6 +165,12 @@ add_dependencies(safety_obstacles ${PROJECT_NAME}_generate_messages_cpp)
 add_executable(save_images_server src/save_images_server.cpp)
 target_link_libraries(save_images_server ${catkin_LIBRARIES})
 add_dependencies(save_images_server ${PROJECT_NAME}_generate_messages_cpp)
+
+add_executable(camera_movement src/camera_movement.cpp)
+target_link_libraries(camera_movement ${catkin_LIBRARIES})
+add_dependencies(camera_movement ${PROJECT_NAME}_generate_messages_cpp)
+
+
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use

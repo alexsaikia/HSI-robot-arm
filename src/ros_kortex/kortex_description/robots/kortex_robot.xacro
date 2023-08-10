@@ -123,7 +123,7 @@
                     </collision>
                 </link>
                 <joint name="${prefix}extrusion_joint" type="fixed">
-                    <origin xyz="0.05 0 -0.024" rpy="0 0 0" />
+                    <origin xyz="-0.05 0 -0.024" rpy="0 0 0" />
                     <parent link="${prefix}kinova_plate_link" />
                     <child link="${prefix}extrusion_link" />
                     <axis xyz="0 0 0" />

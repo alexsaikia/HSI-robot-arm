@@ -7,11 +7,12 @@
 
   <xacro:macro name="load_arm" params="parent:='' dof vision prefix *origin">
       <link name="${prefix}base_link">
-        <inertial>
+      <!-- Comment out inertial setting as this is the world root -->
+        <!-- <inertial>
           <origin xyz="-0.000648 -0.000166 0.084487" rpy="0 0 0" />
           <mass value="1.697" />
           <inertia ixx="0.004622" ixy="9E-06" ixz="6E-05" iyy="0.004495" iyz="9E-06" izz="0.002079" />
-        </inertial>
+        </inertial> -->
         <visual>
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
@@ -52,7 +53,7 @@
     </link>
     <joint
       name="${prefix}joint_1"
-      type="continuous">
+      type="revolute">
       <origin xyz="0 0 0.15643" rpy="3.1416 2.7629E-18 -4.9305E-36" />
       <parent
         link="${prefix}base_link" />
@@ -60,9 +61,12 @@
         link="${prefix}shoulder_link" />
       <axis
         xyz="0 0 1" />
-      <limit
+      <limit 
+        lower="-0.55" 
+        upper="0.55"
         effort="39"
         velocity="1.3963" />
+      <!--  changed from continuous to revolute -->
     </joint>
     <link name="${prefix}half_arm_1_link">
       <inertial>
@@ -96,7 +100,8 @@
         link="${prefix}half_arm_1_link" />
       <axis
         xyz="0 0 1" />
-      <limit lower="-2.41" upper="2.41" effort="39" velocity="1.3963" />
+        <!-- Changed bounds to +-pi/2 from +-2.41 -->
+      <limit lower="${-pi/2}" upper="${pi/2}" effort="39" velocity="1.3963" />
     </joint>
     <link name="${prefix}half_arm_2_link">
       <inertial>
@@ -130,7 +135,7 @@
         link="${prefix}half_arm_2_link" />
       <axis
         xyz="0 0 1" />
-      <limit
+      <limit        
         effort="39"
         velocity="1.3963" />
     </joint>
@@ -166,7 +171,8 @@
         link="${prefix}forearm_link" />
       <axis
         xyz="0 0 1" />
-      <limit lower="-2.66" upper="2.66" effort="39" velocity="1.3963" />
+        <!-- Changed upper bound from 2.66 to 0 -->
+      <limit lower="-2.66" upper="0.0" effort="39" velocity="1.3963" />
     </joint>
     <link name="${prefix}spherical_wrist_1_link">
       <inertial>
