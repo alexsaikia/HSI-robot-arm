@@ -26,6 +26,9 @@
 //sample_rad: radius of the sphere
 //sample_point: center of the sphere
 
+// Run the main launch file and the following for camera calibration:
+// rosrun camera_calibration cameracalibrator.py --approximate 0.01 --size 8x6 --square 0.019 right:=/right_camera/image_color left:=/left_camera/image_color right_camera:=/right_camera left_camera:=/left_camera
+
 
 
 // The circle constant tau = 2*pi. One tau is one rotation in radians
@@ -106,6 +109,12 @@ int main(int argc, char** argv)
   // Raw pointers are frequently used to refer to the planning group for improved performance.
   const moveit::core::JointModelGroup* joint_model_group =
       move_group_interface.getCurrentState()->getJointModelGroup(PLANNING_GROUP);
+
+  // Set maximum velocity scaling factor
+  move_group_interface.setMaxVelocityScalingFactor(1.0);
+
+  // Set maximum acceleration scaling factor
+  move_group_interface.setMaxAccelerationScalingFactor(1.0);
 
   // Define a collision object ROS message.
   auto const sphere_sample_collision_object = [frame_id = move_group_interface.getPlanningFrame(), s_pos,sample_rad]
@@ -258,17 +267,20 @@ int main(int argc, char** argv)
                                          sample_rad * cos(phi) + s_pos[2]};
     //Calculate the difference between the capture point and the sample point
     std::vector<double> v = {capture_point[0] - s_pos[0], capture_point[1] - s_pos[1], capture_point[2] - s_pos[2]};
+
+    //Calculate the quaternion for the orientation such that the z axis points towards the sample point, the y axis points down and x is parallel to the ground
+
     if (v[0] == 0 && v[1] == 0)
         {
           q.setRPY(M_PI, 0.0, 0.0);
         }
         else if (v[0] <= 0)
         {
-          q.setRPY(M_PI - atan(sqrt(v[0] * v[0] + v[1] * v[1]) / v[2]), 0.0, acos(v[1] / (sqrt(v[0] * v[0] + v[1] * v[1]))));
+          q.setRPY(M_PI-atan(sqrt(v[0] * v[0] + v[1] * v[1]) / v[2]), 0.0, acos(v[1] / (sqrt(v[0] * v[0] + v[1] * v[1]))));
         }
         else
         {
-          q.setRPY(M_PI - atan(sqrt(v[0] * v[0] + v[1] * v[1]) / v[2]), 0.0, -acos(v[1] / (sqrt(v[0] * v[0] + v[1] * v[1]))));
+          q.setRPY(M_PI-atan(sqrt(v[0] * v[0] + v[1] * v[1]) / v[2]), 0.0,-acos(v[1] / (sqrt(v[0] * v[0] + v[1] * v[1]))));
         }
         q.normalize();
     std::vector<double> capture_orientation = {q[0], q[1], q[2], q[3]};
