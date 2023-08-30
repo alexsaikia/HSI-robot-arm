@@ -65,6 +65,9 @@
   <build_depend>image_transport</build_depend>
   <build_depend>sensor_msgs</build_depend>
   <build_depend>geometry_msgs</build_depend>
+  <build_depend>easy_handeye</build_depend>
+  <build_depend>easy_handeye_msgs</build_depend>
+  <build_depend>easy_aruco</build_depend>
 
   <build_export_depend>flir_camera_description</build_export_depend>
   <build_export_depend>kortex_control</build_export_depend>
@@ -80,6 +83,9 @@
   <build_export_depend>image_transport</build_export_depend>
   <build_export_depend>sensor_msgs</build_export_depend>
   <build_export_depend>geometry_msgs</build_export_depend>
+  <build_export_depend>easy_handeye</build_export_depend>
+  <build_export_depend>easy_handeye_msgs</build_export_depend>
+  <build_export_depend>easy_aruco</build_export_depend>
 
   <exec_depend>message_runtime</exec_depend>
   <exec_depend>flir_camera_description</exec_depend>
@@ -96,6 +102,9 @@
   <exec_depend>image_transport</exec_depend>
   <exec_depend>sensor_msgs</exec_depend>
   <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>easy_handeye</exec_depend>
+  <exec_depend>easy_handeye_msgs</exec_depend>
+  <exec_depend>easy_aruco</exec_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->

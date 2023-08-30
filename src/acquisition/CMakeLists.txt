@@ -26,6 +26,9 @@ find_package(catkin REQUIRED COMPONENTS
   image_transport
   sensor_msgs
   geometry_msgs
+  easy_handeye
+  easy_handeye_msgs
+  easy_aruco
 )
 
 ## System dependencies are found with CMake's conventions
@@ -87,6 +90,7 @@ generate_messages(
   std_msgs
   sensor_msgs
   geometry_msgs
+  easy_handeye_msgs
   # Or other packages containing msgs
 )
 

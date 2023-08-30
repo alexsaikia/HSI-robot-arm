@@ -4,8 +4,6 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /Global Options1
-        - /Status1
         - /PlanningScene1/Scene Robot1
       Splitter Ratio: 0.5
     Tree Height: 691
@@ -138,6 +136,10 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+          left_camera_body:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
             Value: true
           left_camera_lens:
             Alpha: 1
@@ -145,6 +147,14 @@ Visualization Manager:
             Show Trail: false
             Value: true
           left_camera_optical:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_camera_optical_control_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_camera_virtual_lens:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -162,6 +172,10 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+          right_camera_body:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
             Value: true
           right_camera_lens:
             Alpha: 1
@@ -169,6 +183,14 @@ Visualization Manager:
             Show Trail: false
             Value: true
           right_camera_optical:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_camera_optical_control_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_camera_virtual_lens:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -300,6 +322,10 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+          left_camera_body:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
             Value: true
           left_camera_lens:
             Alpha: 1
@@ -307,6 +333,14 @@ Visualization Manager:
             Show Trail: false
             Value: true
           left_camera_optical:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_camera_optical_control_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_camera_virtual_lens:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -324,6 +358,10 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+          right_camera_body:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
             Value: true
           right_camera_lens:
             Alpha: 1
@@ -331,6 +369,14 @@ Visualization Manager:
             Show Trail: false
             Value: true
           right_camera_optical:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_camera_optical_control_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_camera_virtual_lens:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -456,6 +502,10 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        left_camera_body:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
           Value: true
         left_camera_lens:
           Alpha: 1
@@ -463,6 +513,14 @@ Visualization Manager:
           Show Trail: false
           Value: true
         left_camera_optical:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_camera_optical_control_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_camera_virtual_lens:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -480,6 +538,10 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        right_camera_body:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
           Value: true
         right_camera_lens:
           Alpha: 1
@@ -487,6 +549,14 @@ Visualization Manager:
           Show Trail: false
           Value: true
         right_camera_optical:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        right_camera_optical_control_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        right_camera_virtual_lens:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -534,7 +604,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /left_camera/image_color
+      Image Topic: /easy_aruco_node/debug_image
       Max Value: 1
       Median window: 5
       Min Value: 0
@@ -546,7 +616,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /right_camera/image_color
+      Image Topic: /right/image_rect_color
       Max Value: 1
       Median window: 5
       Min Value: 0
@@ -564,8 +634,126 @@ Visualization Manager:
         Text: true
         pose0: true
         pose1: true
-        pose2: true
       Queue Size: 100
+      Value: true
+    - Class: rviz/TF
+      Enabled: true
+      Filter (blacklist): ""
+      Filter (whitelist): ""
+      Frame Timeout: 15
+      Frames:
+        All Enabled: false
+        adapter_link:
+          Value: false
+        base_link:
+          Value: true
+        board:
+          Value: true
+        bracelet_link:
+          Value: false
+        camera_plate_link:
+          Value: false
+        end_effector_link:
+          Value: false
+        extrusion_link:
+          Value: false
+        forearm_link:
+          Value: false
+        half_arm_1_link:
+          Value: false
+        half_arm_2_link:
+          Value: false
+        kinova_plate_link:
+          Value: false
+        left_camera:
+          Value: false
+        left_camera_body:
+          Value: false
+        left_camera_lens:
+          Value: false
+        left_camera_optical:
+          Value: false
+        left_camera_optical_control_frame:
+          Value: false
+        left_camera_optical_control_link:
+          Value: true
+        left_camera_virtual_lens:
+          Value: true
+        left_side_bracket_link:
+          Value: false
+        mounting_plate_link:
+          Value: false
+        right_camera:
+          Value: false
+        right_camera_body:
+          Value: false
+        right_camera_lens:
+          Value: false
+        right_camera_optical:
+          Value: false
+        right_camera_optical_control_link:
+          Value: false
+        right_camera_virtual_lens:
+          Value: false
+        right_side_bracket_link:
+          Value: false
+        shoulder_link:
+          Value: false
+        spherical_wrist_1_link:
+          Value: false
+        spherical_wrist_2_link:
+          Value: false
+        tool_frame:
+          Value: false
+        top_plate_link:
+          Value: false
+      Marker Alpha: 1
+      Marker Scale: 0.20000000298023224
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      Tree:
+        base_link:
+          board:
+            {}
+          mounting_plate_link:
+            kinova_plate_link:
+              extrusion_link:
+                {}
+          shoulder_link:
+            half_arm_1_link:
+              half_arm_2_link:
+                forearm_link:
+                  spherical_wrist_1_link:
+                    spherical_wrist_2_link:
+                      bracelet_link:
+                        end_effector_link:
+                          tool_frame:
+                            adapter_link:
+                              top_plate_link:
+                                camera_plate_link:
+                                  left_camera:
+                                    left_camera_body:
+                                      left_camera_lens:
+                                        left_camera_virtual_lens:
+                                          left_camera_optical:
+                                            left_camera_optical_control_link:
+                                              {}
+                                          left_camera_optical_control_frame:
+                                            {}
+                                  right_camera:
+                                    right_camera_body:
+                                      right_camera_lens:
+                                        right_camera_virtual_lens:
+                                          right_camera_optical:
+                                            right_camera_optical_control_link:
+                                              {}
+                                left_side_bracket_link:
+                                  {}
+                                right_side_bracket_link:
+                                  {}
+      Update Interval: 0
       Value: true
   Enabled: true
   Global Options:
@@ -595,7 +783,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.68998122215271
+      Distance: 3.240203857421875
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -611,9 +799,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.14539834856987
+      Pitch: 0.5503982305526733
       Target Frame: <Fixed Frame>
-      Yaw: 1.5172008275985718
+      Yaw: 1.387200951576233
     Saved: ~
 Window Geometry:
   Displays:

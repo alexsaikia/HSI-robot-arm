@@ -21,6 +21,7 @@
     <arg name="right_camera_serial" default="22423944"/> <!--Right RGB camera serial number-->
     <arg name="set_frame_rate" default="false"/> <!--Enable set frame rate. If false camera will acquire maximum number of frames-->
     <arg name="frame_rate" default="60"/> <!--Set frame rate-->
+    <arg name="run_stereo_image_proc" default="true"/> <!--Run stereo image processing nodelet-->
 
     <!-- Namespace -->
     <arg name="robot_name" default="my_$(arg arm)"/>
@@ -40,7 +41,19 @@
     <param name="capture" value="$(arg capture)"/>
     <param name="dataset_file_path" value="$(arg dataset_file_path)"/>
 
-   
+    <!-- Arguments for handeye -->
+    <arg name="handeye_calibration" default="false"/>
+    <arg name="marker_size" doc="Size of the ArUco marker used, in meters" default="0.01600" />
+    <arg name="square_size" doc="The ID of the ArUco marker used" default="0.024" />
+    <arg name="square_number_x" default="7" />
+    <arg name="square_number_y" default="11" />
+    <arg name="camera_namespace" default="/left" />
+    <arg name="camera_frame" default="left_camera_optical" />
+    <arg name="reference_frame" default="base_link" />
+    <arg name="ee_frame" default="left_camera_virtual_lens"/>
+    <arg name="dictionary" default="DICT_6X6_250" />
+    <arg name="publish_dummy" default="true" />
+
     <!-- Start robot launch files -->
     <!-- Real robot -->
     <include file="$(find kortex_driver)/launch/kortex_driver.launch" if="$(eval not arg('sim'))"> 
@@ -85,6 +98,18 @@
         <arg name="frame_rate" value="$(arg frame_rate)"/>
     </include>
 
+    <!-- Stereo image processing nodelet -->
+    <group if="$(arg run_stereo_image_proc)" >
+      <node pkg="stereo_image_proc" type="stereo_image_proc" name="stereo_image_proc" >
+        <param name="approximate_sync" value="true"/>
+        <!-- Remap topics so that this node takes /(arg camera_name) topics and gives them to stereo_image_proc in the appropriate /left /right format -->
+        <remap from="left/image_raw" to="$(arg left_camera_name)/image_raw"/>
+        <remap from="left/camera_info" to="$(arg left_camera_name)/camera_info"/>
+        <remap from="right/image_raw" to="$(arg right_camera_name)/image_raw"/>
+        <remap from="right/camera_info" to="$(arg right_camera_name)/camera_info"/>
+      </node>
+    </group>
+
     <!-- Launch save images server node -->
     <node pkg="acquisition" type="save_images_server" name="save_images_server" respawn="true" output="screen" />
 
@@ -94,4 +119,37 @@
     <!-- Launch safety obstacles node -->
     <node pkg="acquisition" type="safety_obstacles" name="safety_obstacles" respawn="false" ns="my_gen3" output="screen" if="$(eval arg('obstacle_avoidance'))"/>
     
+    <!-- Handeye calibration group -->
+    <group if="$(arg handeye_calibration)">
+        <!-- start ArUco -->
+        <node pkg="easy_aruco" type="easy_aruco_node" name="easy_aruco_node" output="screen" >
+            <param name="object_type" value="charuco_board" />
+
+            <param name="camera_namespace" value="$(arg camera_namespace)" />
+            <param name="dictionary" value="$(arg dictionary)" />
+
+            <param name="camera_frame" value="$(arg camera_frame)" />
+            <param name="reference_frame" value="$(arg ee_frame)" />
+
+            <param name="marker_size" value="$(arg marker_size)" />
+            <param name="square_size" value="$(arg square_size)" />
+            <param name="square_number_x" value="$(arg square_number_x)" />
+            <param name="square_number_y" value="$(arg square_number_y)" />
+            <remap from="$(arg camera_namespace)/camera_info" to="$(arg camera_namespace)_camera/camera_info" />
+        </node>
+
+        <!-- Start easy handeye -->
+        <include file="$(find easy_handeye)/launch/calibrate.launch">
+            <arg name="eye_on_hand" value="true" />
+            <arg name="start_rviz" value="false"/>
+            <arg name="move_group_namespace" value="/$(arg robot_name)" />
+            <arg name="move_group" value="arm" />
+            <arg name="tracking_base_frame" value="$(arg camera_frame)" />
+            <arg name="tracking_marker_frame" value="board" />
+            <arg name="robot_base_frame" value="$(arg reference_frame)" />
+            <arg name="robot_effector_frame" value="$(arg ee_frame)" />
+            <arg name="freehand_robot_movement" value="false" />
+            <arg name="publish_dummy" value="$(arg publish_dummy)" />
+        </include>
+    </group>
 </launch>
