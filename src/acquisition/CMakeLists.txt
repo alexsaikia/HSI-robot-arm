@@ -29,6 +29,8 @@ find_package(catkin REQUIRED COMPONENTS
   easy_handeye
   easy_handeye_msgs
   easy_aruco
+  stereo_image_proc
+  stereo_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -91,6 +93,7 @@ generate_messages(
   sensor_msgs
   geometry_msgs
   easy_handeye_msgs
+  stereo_msgs
   # Or other packages containing msgs
 )
 

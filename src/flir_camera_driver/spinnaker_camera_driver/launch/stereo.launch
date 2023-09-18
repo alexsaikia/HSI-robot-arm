@@ -33,10 +33,10 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
   <arg name="control_frame_rate"        default="true" />
   <arg name="frame_rate"                default="15" />
 
-  <arg name="left_camera_serial"        default="22423944" />
+  <arg name="left_camera_serial"        default="22423939" />
   <arg name="left_camera_calibrated"    default="1" />
 
-  <arg name="right_camera_serial"       default="22423939" />
+  <arg name="right_camera_serial"       default="22423944" />
   <arg name="right_camera_calibrated"   default="1" />
 
   <arg name="run_stereo_image_proc"     default="true" />
@@ -73,7 +73,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       <!-- Camera nodelet -->
       <node pkg="nodelet" type="nodelet" name="camera_nodelet"
             args="load spinnaker_camera_driver/SpinnakerCameraNodelet /camera_nodelet_manager" >
-        <param name="frame_id"                        value="camera_left" />
+        <param name="frame_id"                        value="left_camera_optical" />
         <param name="serial"                          value="$(arg left_camera_serial)" />
 
         <!-- Frame rate -->
@@ -100,7 +100,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       <!-- Camera nodelet -->
       <node pkg="nodelet" type="nodelet" name="camera_nodelet"
             args="load spinnaker_camera_driver/SpinnakerCameraNodelet /camera_nodelet_manager" >
-        <param name="frame_id"                        value="camera_right" />
+        <param name="frame_id"                        value="right_camera_optical" />
         <param name="serial"                          value="$(arg right_camera_serial)" />
 
         <!-- Frame rate -->
