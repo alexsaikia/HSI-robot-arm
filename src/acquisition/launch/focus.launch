@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Make parameters -->
+    <arg name="image_topic" default="/camera/image_color"/>
+    <arg name="rgb_vision" default="true"/>
+
+    <!-- Start camera launch files -->
+    <include file="$(find spinnaker_camera_driver)/launch/camera.launch" if="$(eval arg('rgb_vision'))">
+        <arg name="camera_name" value="camera"/>
+        <arg name="isp_enable" value="True" /> 
+        <arg name="encoding" value="BayerRG8" />
+        <arg name="color_balance" value="Continuous" /> 
+    </include>
+    <!-- Launch focus capture node -->
+    <node pkg="acquisition" type="focus_capture" name="focus_capture" respawn="true" output="screen"/>
+</launch>

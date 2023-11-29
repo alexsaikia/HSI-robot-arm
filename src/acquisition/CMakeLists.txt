@@ -77,6 +77,7 @@ find_package(catkin REQUIRED COMPONENTS
 add_service_files(
   FILES
   save_images.srv
+  capture_image.srv
 )
 
 ## Generate actions in the 'action' folder
@@ -176,6 +177,18 @@ add_dependencies(save_images_server ${PROJECT_NAME}_generate_messages_cpp)
 add_executable(camera_movement src/camera_movement.cpp)
 target_link_libraries(camera_movement ${catkin_LIBRARIES})
 add_dependencies(camera_movement ${PROJECT_NAME}_generate_messages_cpp)
+
+add_executable(capture_image_server src/capture_image_server.cpp)
+target_link_libraries(capture_image_server ${catkin_LIBRARIES})
+add_dependencies(capture_image_server ${PROJECT_NAME}_generate_messages_cpp)
+
+add_executable(focus_capture src/focus_capture.cpp)
+target_link_libraries(focus_capture ${catkin_LIBRARIES})
+add_dependencies(focus_capture ${PROJECT_NAME}_generate_messages_cpp)
+
+# add_executable(cam_visual_capture src/cam_visual_capture.cpp)
+# target_link_libraries(cam_visual_capture ${catkin_LIBRARIES})
+# add_dependencies(cam_visual_capture ${PROJECT_NAME}_generate_messages_cpp)
 
 
 ## Rename C++ executable without prefix

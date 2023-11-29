@@ -1,0 +1,9 @@
+# capture_image.srv
+# Service for capturing an image
+# Request
+int64 img_num
+string filename
+string img_topic
+---
+# Response
+bool success

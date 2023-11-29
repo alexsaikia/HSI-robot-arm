@@ -15,10 +15,10 @@
     <!-- Camera configuration -->
     <arg name="left_camera_name" default="left_camera"/> <!--Left camera name-->
     <!-- <arg name="left_camera_serial" default="19440080"/> Left MONO camera serial number -->
-    <arg name="left_camera_serial" default="22423939"/> <!--Left RGB camera serial number-->
+    <arg name="left_camera_serial" default="22423944"/> <!--Left RGB camera serial number-->
     <arg name="right_camera_name" default="right_camera"/> <!--Right camera name-->
     <!-- <arg name="right_camera_serial" default="19440078"/> Right MONO camera serial number -->
-    <arg name="right_camera_serial" default="22423944"/> <!--Right RGB camera serial number-->
+    <arg name="right_camera_serial" default="22423939"/> <!--Right RGB camera serial number-->
     <arg name="set_frame_rate" default="false"/> <!--Enable set frame rate. If false camera will acquire maximum number of frames-->
     <arg name="frame_rate" default="60"/> <!--Set frame rate-->
     <arg name="run_stereo_image_proc" default="true"/> <!--Run stereo image processing nodelet-->
