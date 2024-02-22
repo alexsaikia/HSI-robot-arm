@@ -92,11 +92,11 @@ int main(int argc, char** argv)
 
   // Define sample radius from ROS parameter server
   double sample_rad;
-  node_handle.param("/sample_rad", sample_rad, 0.1);
+  node_handle.param("/sample_rad", sample_rad, 0.2);
 
   // Define sample point from ROS parameter server
   std::vector<double> s_pos;  
-  node_handle.param("/sample_point", s_pos, {0.5, 0, 0.0});
+  node_handle.param("/sample_point", s_pos, {0.50, 0, 0.00});
 
   // The :planning_interface:`MoveGroupInterface` class can be easily
   // setup using just the name of the planning group you would like to control and plan for.

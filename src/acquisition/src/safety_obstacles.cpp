@@ -81,13 +81,13 @@ int main(int argc, char **argv)
     // The boxes will act as walls around the robot
     ROS_INFO("Creating collision objects");
     // Create a box to the right of the robot
-    collision_objects.push_back(make_box("right_wall", {2.4, 0.01, 1.0}, {1.0, -0.2, 0.5}, move_group_interface.getPlanningFrame()));
+    collision_objects.push_back(make_box("right_wall", {2.4, 0.01, 1.0}, {1.0, -0.6, 0.5}, move_group_interface.getPlanningFrame()));
     ROS_INFO("Collision object 1 created");
     // Create a box to the left of the robot
-    collision_objects.push_back(make_box("left_wall", {2.4, 0.01, 1.0}, {1.0, 0.35, 0.5}, move_group_interface.getPlanningFrame()));
+    collision_objects.push_back(make_box("left_wall", {2.4, 0.01, 1.0}, {1.0, 0.6, 0.5}, move_group_interface.getPlanningFrame()));
     ROS_INFO("Collision object 2 created");
     // Create a box in front of the robot
-    collision_objects.push_back(make_box("front_wall", {0.01, 1.0, 1.0}, {0.8, 0.0, 0.5}, move_group_interface.getPlanningFrame()));
+    collision_objects.push_back(make_box("front_wall", {0.01, 1.0, 1.0}, {1, 0.0, 0.5}, move_group_interface.getPlanningFrame()));
     ROS_INFO("Collision object 3 created");
     // Create a box behind the robot
     collision_objects.push_back(make_box("back_wall", {0.01, 1.0, 1.0}, {-0.15, 0.0, 0.5}, move_group_interface.getPlanningFrame()));
@@ -96,7 +96,7 @@ int main(int argc, char **argv)
     collision_objects.push_back(make_box("top_wall", {2.0, 1.0, 0.01}, {0.5, 0.0, 1.00}, move_group_interface.getPlanningFrame()));
     ROS_INFO("Collision object 5 created");
     // Create a box below the robot
-    collision_objects.push_back(make_box("bottom_wall", {2.0, 1.0, 0.01}, {1.0, 0.0, -0.069}, move_group_interface.getPlanningFrame()));
+    collision_objects.push_back(make_box("bottom_wall", {2.0, 1.0, 0.01}, {1.15, 0.0, -0.065}, move_group_interface.getPlanningFrame()));//-0.0069
     ROS_INFO("Collision object 6 created");
 
     // Add the collision objects to the scene

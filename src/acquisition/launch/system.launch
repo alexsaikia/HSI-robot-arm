@@ -29,8 +29,8 @@
 
     <!-- Capture configuration -->
     <arg name="N" default="32"/> <!-- Number of images to capture -->
-    <arg name="sample_rad" default="0.15"/> <!-- Radius of the sphere -->
-    <arg name="sample_point" default="{0.6,0.0,-0.06}"/> <!-- Center of the sphere -->
+    <arg name="sample_rad" default="0.175"/> <!-- Radius of the sphere -->
+    <arg name="sample_point" default="{0.55,0.0,0}"/> <!-- Center of the sphere -->
     <arg name="capture" default="true"/> <!-- True if you want to capture images -->
     <arg name="dataset_file_path" default="/media/alex/Data/data"/> <!-- Path to the dataset folder -->
 
