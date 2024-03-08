@@ -186,6 +186,10 @@ add_executable(focus_capture src/focus_capture.cpp)
 target_link_libraries(focus_capture ${catkin_LIBRARIES})
 add_dependencies(focus_capture ${PROJECT_NAME}_generate_messages_cpp)
 
+add_executable(tracking src/tracking.cpp)
+target_link_libraries(tracking ${catkin_LIBRARIES})
+add_dependencies(tracking ${PROJECT_NAME}_generate_messages_cpp)
+
 # add_executable(cam_visual_capture src/cam_visual_capture.cpp)
 # target_link_libraries(cam_visual_capture ${catkin_LIBRARIES})
 # add_dependencies(cam_visual_capture ${PROJECT_NAME}_generate_messages_cpp)
