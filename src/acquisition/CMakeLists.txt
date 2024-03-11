@@ -190,6 +190,10 @@ add_executable(tracking src/tracking.cpp)
 target_link_libraries(tracking ${catkin_LIBRARIES})
 add_dependencies(tracking ${PROJECT_NAME}_generate_messages_cpp)
 
+add_executable(tracking_support src/tracking_support.cpp)
+target_link_libraries(tracking_support ${catkin_LIBRARIES})
+add_dependencies(tracking_support ${PROJECT_NAME}_generate_messages_cpp)
+
 # add_executable(cam_visual_capture src/cam_visual_capture.cpp)
 # target_link_libraries(cam_visual_capture ${catkin_LIBRARIES})
 # add_dependencies(cam_visual_capture ${PROJECT_NAME}_generate_messages_cpp)

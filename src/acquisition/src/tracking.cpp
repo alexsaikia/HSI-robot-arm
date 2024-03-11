@@ -131,7 +131,7 @@ int main(int argc, char **argv)
   // Add the collision object into the world  
   std::vector<moveit_msgs::CollisionObject> collision_objects;
   collision_objects.push_back(sphere_sample_collision_object);
-  planning_scene_interface.addCollisionObjects(collision_objects);
+  // planning_scene_interface.addCollisionObjects(collision_objects);
 
   // Setup for data capture
   // ^^^^^^^^^^^^^^^^^^^^^^
@@ -230,88 +230,62 @@ int main(int argc, char **argv)
   ROS_INFO_NAMED("Tracking", "Available Planning Groups:");
   std::copy(move_group_interface.getJointModelGroupNames().begin(),
             move_group_interface.getJointModelGroupNames().end(), std::ostream_iterator<std::string>(std::cout, ", "));
-
-  // Check to see if the marker12 reference frame is available using tf and obtain the pose
   tf2_ros::Buffer tfBuffer;
   tf2_ros::TransformListener tfListener(tfBuffer);
-  tf2_ros::TransformBroadcaster tfBroadcaster;
-  // Create a true flag for the while loop
-  bool marker12_flag = false;
-  // Create a 10 long vector to store transformStamped
-  std::vector<geometry_msgs::TransformStamped> transformStamped(10);
-  // Set while loop while ros ok
   while (ros::ok())
   {
-    // Another while loop that is only active while the user is pressing t
-    if(1==1)
+    // Get the pose of target_frame in the base_link frame
+    geometry_msgs::TransformStamped target_transformStamped;
+    try
     {
-      try
-      {
-        if (marker12_flag)
-        {
-          // Lookup the transform from the base_link to the marker_12 and copy to each element of the vector directly
-          for (int i = 0; i < 10; i++)
-          {
-            transformStamped[i] = tfBuffer.lookupTransform("base_link", "marker_12", ros::Time(0));
-          }
-          // Set the flag to false
-          marker12_flag = false;
-        }
-        else
-        {
-        geometry_msgs::TransformStamped temp_transformStamped;
-        temp_transformStamped = tfBuffer.lookupTransform("base_link", "marker_12", ros::Time(0));
-        // Create an exponential moving average of the transform from the base_link to the marker_12 using transformStamped
-        for (int i = 0; i < 9; i++)
-        {
-          transformStamped[i]=transformStamped[i+1];
-        }
-        transformStamped[9] = temp_transformStamped;
-        // Average the transformStamped and weight the more recent terms
-        geometry_msgs::TransformStamped average_transformStamped;
-        average_transformStamped.header.stamp = ros::Time::now();
-        average_transformStamped.header.frame_id = "base_link";
-        average_transformStamped.child_frame_id = "average_marker_12";
-        average_transformStamped.transform.translation.x = (transformStamped[0].transform.translation.x + 2*transformStamped[1].transform.translation.x + 3*transformStamped[2].transform.translation.x + 4*transformStamped[3].transform.translation.x + 5*transformStamped[4].transform.translation.x + 6*transformStamped[5].transform.translation.x + 7*transformStamped[6].transform.translation.x + 8*transformStamped[7].transform.translation.x + 9*transformStamped[8].transform.translation.x + 10*transformStamped[9].transform.translation.x)/55;
-        average_transformStamped.transform.translation.y = (transformStamped[0].transform.translation.y + 2*transformStamped[1].transform.translation.y + 3*transformStamped[2].transform.translation.y + 4*transformStamped[3].transform.translation.y + 5*transformStamped[4].transform.translation.y + 6*transformStamped[5].transform.translation.y + 7*transformStamped[6].transform.translation.y + 8*transformStamped[7].transform.translation.y + 9*transformStamped[8].transform.translation.y + 10*transformStamped[9].transform.translation.y)/55;
-        average_transformStamped.transform.translation.z = (transformStamped[0].transform.translation.z + 2*transformStamped[1].transform.translation.z + 3*transformStamped[2].transform.translation.z + 4*transformStamped[3].transform.translation.z + 5*transformStamped[4].transform.translation.z + 6*transformStamped[5].transform.translation.z + 7*transformStamped[6].transform.translation.z + 8*transformStamped[7].transform.translation.z + 9*transformStamped[8].transform.translation.z + 10*transformStamped[9].transform.translation.z)/55;
-        average_transformStamped.transform.rotation.x = (transformStamped[0].transform.rotation.x + 2*transformStamped[1].transform.rotation.x + 3*transformStamped[2].transform.rotation.x + 4*transformStamped[3].transform.rotation.x + 5*transformStamped[4].transform.rotation.x + 6*transformStamped[5].transform.rotation.x + 7*transformStamped[6].transform.rotation.x + 8*transformStamped[7].transform.rotation.x + 9*transformStamped[8].transform.rotation.x + 10*transformStamped[9].transform.rotation.x)/55;
-        average_transformStamped.transform.rotation.y = (transformStamped[0].transform.rotation.y + 2*transformStamped[1].transform.rotation.y + 3*transformStamped[2].transform.rotation.y + 4*transformStamped[3].transform.rotation.y + 5*transformStamped[4].transform.rotation.y + 6*transformStamped[5].transform.rotation.y + 7*transformStamped[6].transform.rotation.y + 8*transformStamped[7].transform.rotation.y + 9*transformStamped[8].transform.rotation.y + 10*transformStamped[9].transform.rotation.y)/55;
-        average_transformStamped.transform.rotation.z = (transformStamped[0].transform.rotation.z + 2*transformStamped[1].transform.rotation.z + 3*transformStamped[2].transform.rotation.z + 4*transformStamped[3].transform.rotation.z + 5*transformStamped[4].transform.rotation.z + 6*transformStamped[5].transform.rotation.z + 7*transformStamped[6].transform.rotation.z + 8*transformStamped[7].transform.rotation.z + 9*transformStamped[8].transform.rotation.z + 10*transformStamped[9].transform.rotation.z)/55;
-        average_transformStamped.transform.rotation.w = (transformStamped[0].transform.rotation.w + 2*transformStamped[1].transform.rotation.w + 3*transformStamped[2].transform.rotation.w + 4*transformStamped[3].transform.rotation.w + 5*transformStamped[4].transform.rotation.w + 6*transformStamped[5].transform.rotation.w + 7*transformStamped[6].transform.rotation.w + 8*transformStamped[7].transform.rotation.w + 9*transformStamped[8].transform.rotation.w + 10*transformStamped[9].transform.rotation.w)/55;
-        // Broadcast the average transformStamped
-        tfBroadcaster.sendTransform(average_transformStamped);
-        }
-      }
-      catch (tf2::TransformException &ex)
-      {
-        ROS_WARN("%s", ex.what());
-      }
-      // Calculate the rotation matrix from the quaternion
-      // Eigen::Quaterniond q(transformStamped.transform.rotation.w, transformStamped.transform.rotation.x, transformStamped.transform.rotation.y, transformStamped.transform.rotation.z);
-      // Eigen::Matrix3d R = q.toRotationMatrix();
-      // Get x rotation vector
-      // Eigen::Vector3d x = R.col(0);
-      // Create a new reference frame by taking the marker_12 position and adding 0.2 of the x vector
-      geometry_msgs::TransformStamped new_transformStamped;
-      new_transformStamped.header.stamp = ros::Time::now();
-      new_transformStamped.header.frame_id = "average_marker_12";
-      new_transformStamped.child_frame_id = "target_frame";
-      new_transformStamped.transform.translation.x = 0.2; 
-      new_transformStamped.transform.translation.y = 0.0; 
-      new_transformStamped.transform.translation.z = 0.0; 
-      // Set the rotation as the identity
-      new_transformStamped.transform.rotation.x = -0.5;
-      new_transformStamped.transform.rotation.y = -0.5;
-      new_transformStamped.transform.rotation.z = 0.5;
-      new_transformStamped.transform.rotation.w = 0.5;
-      // Broadcast the new reference frame
-      tfBroadcaster.sendTransform(new_transformStamped);
-      // Sleep for 1 second
-      // ros::Duration(1.0).sleep();
-      
+      target_transformStamped = tfBuffer.lookupTransform("base_link", "target_frame", ros::Time(0));
+      // Print the pose of the target_frame in the base_link frame
+      // printf("time %f, x %f, y %f, z %f\n", target_transformStamped.header.stamp.toSec(),
+                                            // target_transformStamped.transform.translation.x, 
+                                            // target_transformStamped.transform.translation.y, 
+                                            // target_transformStamped.transform.translation.z);
+      // Plan a cartesian path to the target_frame
+      std::vector<geometry_msgs::Pose> waypoints;
+      geometry_msgs::Pose target_pose;
+      target_pose.position.x = target_transformStamped.transform.translation.x;
+      target_pose.position.y = target_transformStamped.transform.translation.y;
+      target_pose.position.z = target_transformStamped.transform.translation.z;
+      target_pose.orientation.x = target_transformStamped.transform.rotation.x;
+      target_pose.orientation.y = target_transformStamped.transform.rotation.y;
+      target_pose.orientation.z = target_transformStamped.transform.rotation.z;
+      target_pose.orientation.w = target_transformStamped.transform.rotation.w;
+      waypoints.push_back(target_pose);
+      moveit_msgs::RobotTrajectory trajectory;
+      // const double jump_threshold = 0.1;
+      // const double eef_step = 0.001;
+      // double fraction = move_group_interface.computeCartesianPath(waypoints, eef_step, jump_threshold, trajectory);
+      // plan the trajectory
+      moveit::planning_interface::MoveGroupInterface::Plan my_plan;
+      move_group_interface.setPoseTarget(target_pose);
+      bool success = (move_group_interface.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+      // Visualize the plan in RViz
+      visual_tools.deleteAllMarkers();
+      visual_tools.publishAxisLabeled(target_pose, "target_pose");
+      visual_tools.publishText(text_pose2, "Pose Goal", rvt::WHITE, rvt::XLARGE);
+      visual_tools.publishTrajectoryLine(my_plan.trajectory_, joint_model_group);
+      visual_tools.trigger();
+
+
+
+      // Wait for the user to press next in the gui
+      visual_tools.prompt("Press 'next' in the RvizVisualToolsGui window to continue the demo");
+      // Execute the trajectory 
+      // moveit::planning_interface::MoveGroupInterface::Plan my_plan;
+      // my_plan.trajectory_ = trajectory;
+      move_group_interface.execute(my_plan);
+    
+    }
+    catch (tf2::TransformException &ex)
+    {
+      ROS_WARN("%s", ex.what());
     }
   }
+  
 
   ros::shutdown();
   return 0;

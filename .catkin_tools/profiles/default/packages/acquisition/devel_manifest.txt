@@ -9,6 +9,7 @@ acquisition
 /home/alex/HSI-robot-arm/devel/.private/acquisition/lib/acquisition/save_images_server /home/alex/HSI-robot-arm/devel/lib/acquisition/save_images_server
 /home/alex/HSI-robot-arm/devel/.private/acquisition/lib/acquisition/safety_obstacles /home/alex/HSI-robot-arm/devel/lib/acquisition/safety_obstacles
 /home/alex/HSI-robot-arm/devel/.private/acquisition/lib/acquisition/tracking /home/alex/HSI-robot-arm/devel/lib/acquisition/tracking
+/home/alex/HSI-robot-arm/devel/.private/acquisition/lib/acquisition/tracking_support /home/alex/HSI-robot-arm/devel/lib/acquisition/tracking_support
 /home/alex/HSI-robot-arm/devel/.private/acquisition/lib/acquisition/focus_capture /home/alex/HSI-robot-arm/devel/lib/acquisition/focus_capture
 /home/alex/HSI-robot-arm/devel/.private/acquisition/lib/acquisition/camera_movement /home/alex/HSI-robot-arm/devel/lib/acquisition/camera_movement
 /home/alex/HSI-robot-arm/devel/.private/acquisition/lib/acquisition/capture_image_server /home/alex/HSI-robot-arm/devel/lib/acquisition/capture_image_server

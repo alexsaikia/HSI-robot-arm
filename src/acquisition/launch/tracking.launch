@@ -106,12 +106,12 @@
 
     <!-- Launch save images server node -->
     <node pkg="acquisition" type="save_images_server" name="save_images_server" respawn="true" output="screen" />
+    <!-- Launch tracking_support node -->
+    <node pkg="acquisition" type="tracking_support" name="tracking_support" respawn="true" ns="my_gen3" output="screen" />
 
     <!-- Launch tracking node -->
     <node pkg="acquisition" type="tracking" name="tracking" respawn="true" ns="my_gen3" output="screen" />
 
-    <!-- Launch safety obstacles node -->
-    <node pkg="acquisition" type="safety_obstacles" name="safety_obstacles" respawn="false" ns="my_gen3" output="screen" if="$(eval arg('obstacle_avoidance'))"/>
     
     <!-- start ArUco -->
     <node pkg="easy_aruco" type="easy_aruco_node" name="easy_aruco_node" output="screen" >
@@ -121,10 +121,13 @@
         <param name="dictionary" value="$(arg dictionary)" />
 
         <param name="camera_frame" value="$(arg camera_frame)" />
-        <param name="reference_frame" value="$(arg ee_frame)" />
+        <param name="reference_frame" value="$(arg camera_frame)" />
 
         <param name="marker_size" value="$(arg marker_size)" />
         <remap from="$(arg camera_namespace)/camera_info" to="$(arg camera_namespace)_camera/camera_info" />
     </node>
+
+    <!-- Launch safety obstacles node -->
+    <node pkg="acquisition" type="safety_obstacles" name="safety_obstacles" respawn="false" ns="my_gen3" output="screen" if="$(eval arg('obstacle_avoidance'))"/>
 
 </launch>
