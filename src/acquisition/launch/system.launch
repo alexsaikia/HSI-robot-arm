@@ -28,9 +28,9 @@
     <arg name="prefix" default=""/>
 
     <!-- Capture configuration -->
-    <arg name="N" default="32"/> <!-- Number of images to capture -->
-    <arg name="sample_rad" default="0.175"/> <!-- Radius of the sphere -->
-    <arg name="sample_point" default="{0.55,0.0,0}"/> <!-- Center of the sphere -->
+    <arg name="N" default="40"/> <!-- Number of images to capture -->
+    <arg name="sample_rad" default="0.20"/> <!-- Radius of the sphere -->
+    <arg name="sample_point" default="{0.5,0.0,0.0}"/> <!-- Center of the sphere -->
     <arg name="capture" default="true"/> <!-- True if you want to capture images -->
     <arg name="dataset_file_path" default="/media/alex/Data/data"/> <!-- Path to the dataset folder -->
 
@@ -111,11 +111,11 @@
     </group>
 
     <!-- Launch save images server node -->
-    <node pkg="acquisition" type="save_images_server" name="save_images_server" respawn="true" output="screen" />
+    <node pkg="acquisition" type="save_images_server" name="save_images_server" respawn="true" output="log" />
 
     <!-- Launch acquire data sphere node -->
-    <node pkg="acquisition" type="acquire_data_sphere" name="acquire_data_sphere" respawn="true" ns="my_gen3" output="screen" if="$(eval arg('rgb_vision'))"/>
-
+    <node pkg="acquisition" type="acquire_data_sphere" name="acquire_data_sphere" respawn="true" ns="my_gen3" output="log" if="$(eval arg('rgb_vision'))" />
+    <!-- launch-prefix="gdb -ex run args" -->
     <!-- Launch safety obstacles node -->
     <node pkg="acquisition" type="safety_obstacles" name="safety_obstacles" respawn="false" ns="my_gen3" output="screen" if="$(eval arg('obstacle_avoidance'))"/>
     

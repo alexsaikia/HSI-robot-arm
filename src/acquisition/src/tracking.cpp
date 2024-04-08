@@ -131,7 +131,7 @@ int main(int argc, char **argv)
   // Add the collision object into the world  
   std::vector<moveit_msgs::CollisionObject> collision_objects;
   collision_objects.push_back(sphere_sample_collision_object);
-  // planning_scene_interface.addCollisionObjects(collision_objects);
+  planning_scene_interface.addCollisionObjects(collision_objects);
 
   // Setup for data capture
   // ^^^^^^^^^^^^^^^^^^^^^^
@@ -232,12 +232,14 @@ int main(int argc, char **argv)
             move_group_interface.getJointModelGroupNames().end(), std::ostream_iterator<std::string>(std::cout, ", "));
   tf2_ros::Buffer tfBuffer;
   tf2_ros::TransformListener tfListener(tfBuffer);
+  int i = 0;
   while (ros::ok())
   {
     // Get the pose of target_frame in the base_link frame
     geometry_msgs::TransformStamped target_transformStamped;
     try
     {
+
       target_transformStamped = tfBuffer.lookupTransform("base_link", "target_frame", ros::Time(0));
       // Print the pose of the target_frame in the base_link frame
       // printf("time %f, x %f, y %f, z %f\n", target_transformStamped.header.stamp.toSec(),
@@ -277,8 +279,57 @@ int main(int argc, char **argv)
       // Execute the trajectory 
       // moveit::planning_interface::MoveGroupInterface::Plan my_plan;
       // my_plan.trajectory_ = trajectory;
+      printf("Moving to target\n");
+      nh.setParam("/moving", true);
       move_group_interface.execute(my_plan);
-    
+      ros::Duration(1.0).sleep();
+      nh.setParam("/moving", false);
+      // If capturing data is enabled, call the service
+    if (capture_data && success)
+    {
+      //Create request
+      acquisition::save_images srv;
+
+      // Get left and right file names using the parameter server
+      std::string left_folder;
+      nh.getParam("/left_folder", left_folder);
+      std::string right_folder;
+      nh.getParam("/right_folder", right_folder);
+      std::string eef_file_name;
+      nh.getParam("/eef_file_name", eef_file_name);
+
+      // Service request
+      srv.request.img_num  = i;
+      srv.request.left_file_name = left_folder + "/" + std::to_string(i) + ".png";
+      srv.request.right_file_name = right_folder + "/" + std::to_string(i) + ".png";
+      srv.request.eef_file_name = eef_file_name;
+      srv.request.eef_pose = move_group_interface.getCurrentPose();
+
+      // Call the service
+      if (client.call(srv))
+      {
+        ROS_INFO("Service call successful");
+        visual_tools.publishText(text_pose2, "Pose Goal " + std::to_string(i) + " captured", rvt::WHITE, rvt::XLARGE);
+        i++;
+      }
+      else
+      {
+        ROS_ERROR("Failed to call service");
+        visual_tools.publishText(text_pose2, "Pose Goal " + std::to_string(i) + " capture unsuccessful", rvt::WHITE, rvt::XLARGE);
+      }
+      visual_tools.trigger();
+    } 
+    else if (!success)
+    {
+      ROS_INFO("No data captured due to failed plan execution");
+    }
+    else if (!capture_data)
+    {
+      ROS_INFO("No data captured due to disabled capture");
+    }
+     // wait for a second
+      // ros::Duration(1.0).sleep();
+      
     }
     catch (tf2::TransformException &ex)
     {

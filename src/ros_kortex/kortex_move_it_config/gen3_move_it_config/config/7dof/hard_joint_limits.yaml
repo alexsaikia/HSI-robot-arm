@@ -29,16 +29,16 @@ joint_limits:
     max_acceleration: 4.94
   $(arg prefix)joint_5:
     has_velocity_limits: true
-    max_velocity: 1.16
+    max_velocity: 1.22
     has_acceleration_limits: true
     max_acceleration: 9.5
   $(arg prefix)joint_6:
     has_velocity_limits: true
-    max_velocity: 1.16
+    max_velocity: 1.22
     has_acceleration_limits: true
     max_acceleration: 9.5
   $(arg prefix)joint_7:
     has_velocity_limits: true
-    max_velocity: 1.16
+    max_velocity: 1.22
     has_acceleration_limits: true
     max_acceleration: 9.5

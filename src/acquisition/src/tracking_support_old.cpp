@@ -28,15 +28,6 @@
 #include <tf2_ros/buffer.h>
 #include <vector>
 
-Eigen::Vector3d vecmean(const std::vector<Eigen::Vector3d>& translations) {
-    Eigen::Vector3d sum(0, 0, 0);
-    for (const auto& translation : translations) {
-        sum += translation;
-    }
-    sum /= translations.size();
-    return sum;
-}
-
 Eigen::Quaterniond quatmean(const std::vector<Eigen::Quaterniond>& quaternions) {
     Eigen::Vector4d sum(0, 0, 0, 0);
     for (const auto& quat : quaternions) {
@@ -93,8 +84,6 @@ int main(int argc, char **argv)
   // Create a vector to store transformStamped
   int window_size = 100;
   std::vector<geometry_msgs::TransformStamped> transformStamped(window_size);
-
-  ros::Rate rate(100);
   // Set while loop while ros ok
   while (ros::ok())
   {
@@ -118,70 +107,75 @@ int main(int argc, char **argv)
         }
         else
         {
-          geometry_msgs::TransformStamped temp_transformStamped;
-          temp_transformStamped = tfBuffer.lookupTransform("base_link", "marker_12", ros::Time(0));
-          
-          // Average the transformStamped and weight the more recent terms
-          geometry_msgs::TransformStamped average_transformStamped;
-          average_transformStamped.header.stamp = ros::Time::now();
-          average_transformStamped.header.frame_id = "base_link";
-          average_transformStamped.child_frame_id = "average_marker_12";
+            geometry_msgs::TransformStamped temp_transformStamped;
+            temp_transformStamped = tfBuffer.lookupTransform("base_link", "marker_12", ros::Time(0));
+            // Create an exponential moving average of the transform from the base_link to the marker_12 using transformStamped
+            for (int i = 0; i < window_size - 1; i++)
+            {
+                transformStamped[i]=transformStamped[i+1];
+            }
+            transformStamped[window_size - 1] = temp_transformStamped;
+            // Average the transformStamped and weight the more recent terms
+            geometry_msgs::TransformStamped average_transformStamped;
+            average_transformStamped.header.stamp = ros::Time::now();
+            average_transformStamped.header.frame_id = "base_link";
+            average_transformStamped.child_frame_id = "average_marker_12";
+            float rotx=0, roty=0, rotz=0, rotw = 0;
+            // Ra = Eigen::Matrix3d::Zero();
+            std::vector<Eigen::Quaterniond> quaternions;
+            for (int i = 0; i < window_size; i++)
+            {   
+              // Convert the quaternion to rotation matrix
+              // Eigen::Quaterniond q(transformStamped[i].transform.rotation.w, 
+              //                      transformStamped[i].transform.rotation.x, 
+              //                      transformStamped[i].transform.rotation.y, 
+              //                      transformStamped[i].transform.rotation.z);
+              // Eigen::Matrix3d R = q.toRotationMatrix();
+              
+              // Get the quaternion as an Eigen quaternion
+              Eigen::Quaterniond q(transformStamped[i].transform.rotation.w, 
+                                   transformStamped[i].transform.rotation.x, 
+                                   transformStamped[i].transform.rotation.y, 
+                                   transformStamped[i].transform.rotation.z);
+              quaternions.push_back(q);
+            
+              // rotx += transformStamped[i].transform.rotation.x / (float) window_size;
+              // roty += transformStamped[i].transform.rotation.y / (float) window_size;
+              // rotz += transformStamped[i].transform.rotation.z / (float) window_size;
+              // rotw += transformStamped[i].transform.rotation.w / (float) window_size;
+              average_transformStamped.transform.translation.x += transformStamped[i].transform.translation.x / (float) window_size;
+              average_transformStamped.transform.translation.y += transformStamped[i].transform.translation.y / (float) window_size;
+              average_transformStamped.transform.translation.z += transformStamped[i].transform.translation.z / (float) window_size;
+            }
+            // Calculate the average quaternion
+            Eigen::Quaterniond mean_quaternion = quatmean(quaternions);
 
-          // MOVING AVERAGE FILTER
-          // average_transformStamped = tfBuffer.lookupTransform("base_link", "marker_12", ros::Time(0));
+            // Normalize the quaternion
+            // float norm = sqrt(rotx*rotx + roty*roty + rotz*rotz + rotw*rotw);
+            // rotx = rotx/norm;
+            // roty = roty/norm;
+            // rotz = rotz/norm;
+            // rotw = rotw/norm;
 
-          std::vector<Eigen::Quaterniond> quaternions;
-          std::vector<Eigen::Vector3d> translations;
+            // Set the rotation as the average
+            // average_transformStamped.transform.rotation.x = rotx;
+            // average_transformStamped.transform.rotation.y = roty;
+            // average_transformStamped.transform.rotation.z = rotz;
+            // average_transformStamped.transform.rotation.w = rotw;
+            average_transformStamped.transform.rotation.x = mean_quaternion.x();
+            average_transformStamped.transform.rotation.y = mean_quaternion.y();
+            average_transformStamped.transform.rotation.z = mean_quaternion.z();
+            average_transformStamped.transform.rotation.w = mean_quaternion.w();
 
-          // Get the translation as an Eigen vector
-          Eigen::Vector3d t(temp_transformStamped.transform.translation.x, 
-                            temp_transformStamped.transform.translation.y, 
-                            temp_transformStamped.transform.translation.z);
-          translations.push_back(t);
-
-          // Get the quaternion as an Eigen quaternion
-          Eigen::Quaterniond q(temp_transformStamped.transform.rotation.w, 
-                                temp_transformStamped.transform.rotation.x, 
-                                temp_transformStamped.transform.rotation.y, 
-                                temp_transformStamped.transform.rotation.z);
-          quaternions.push_back(q);
-
-          if (translations.size() > window_size) 
-          {
-            translations.erase(translations.begin());
-            quaternions.erase(quaternions.begin());
-          }
-
-          // Calculate the average translation
-          Eigen::Vector3d mean_translation = vecmean(translations);
-
-          average_transformStamped.transform.translation.x = mean_translation.x();
-          average_transformStamped.transform.translation.y = mean_translation.y();
-          average_transformStamped.transform.translation.z = mean_translation.z();  
-
-          // Calculate the average quaternion
-          Eigen::Quaterniond mean_quaternion = quatmean(quaternions);
-
-          average_transformStamped.transform.rotation.x = mean_quaternion.x();
-          average_transformStamped.transform.rotation.y = mean_quaternion.y();
-          average_transformStamped.transform.rotation.z = mean_quaternion.z();
-          average_transformStamped.transform.rotation.w = mean_quaternion.w();
-
-          // EXPONENTIAL MOVING AVERAGE FILTER
-
-          // printf("time %f, x %f, y %f, z %f\n", average_transformStamped.header.stamp.toSec(), average_transformStamped.transform.translation.x, average_transformStamped.transform.translation.y, average_transformStamped.transform.translation.z);
-          // printf("time %f, x %f, y %f, z %f, qx %f, qy %f, qz %f, qw %f\n", average_transformStamped.header.stamp.toSec(), average_transformStamped.transform.translation.x, average_transformStamped.transform.translation.y, average_transformStamped.transform.translation.z, average_transformStamped.transform.rotation.x, average_transformStamped.transform.rotation.y, average_transformStamped.transform.rotation.z, average_transformStamped.transform.rotation.w);
-          // Broadcast the average transformStamped
-          tfBroadcaster.sendTransform(average_transformStamped);
-
-          // Ensure the loop runs at 100 Hz, making the average process take 1 sec for 100 points
-          rate.sleep();
+            // printf("time %f, x %f, y %f, z %f\n", average_transformStamped.header.stamp.toSec(), average_transformStamped.transform.translation.x, average_transformStamped.transform.translation.y, average_transformStamped.transform.translation.z);
+            // printf("time %f, x %f, y %f, z %f, qx %f, qy %f, qz %f, qw %f\n", average_transformStamped.header.stamp.toSec(), average_transformStamped.transform.translation.x, average_transformStamped.transform.translation.y, average_transformStamped.transform.translation.z, average_transformStamped.transform.rotation.x, average_transformStamped.transform.rotation.y, average_transformStamped.transform.rotation.z, average_transformStamped.transform.rotation.w);
+            // Broadcast the average transformStamped
+            tfBroadcaster.sendTransform(average_transformStamped);
         }
       }
       catch (tf2::TransformException &ex)
       {
         ROS_WARN("%s", ex.what());
-        rate.sleep();
       }
       // Calculate the rotation matrix from the quaternion
       // Eigen::Quaterniond q(transformStamped.transform.rotation.w, transformStamped.transform.rotation.x, transformStamped.transform.rotation.y, transformStamped.transform.rotation.z);
@@ -195,7 +189,7 @@ int main(int argc, char **argv)
       new_transformStamped.header.stamp = ros::Time::now();
       new_transformStamped.header.frame_id = "average_marker_12";
       new_transformStamped.child_frame_id = "target_frame";
-      new_transformStamped.transform.translation.x = 0.25; 
+      new_transformStamped.transform.translation.x = 0.3; 
       new_transformStamped.transform.translation.y = 0.0; 
       new_transformStamped.transform.translation.z = 0.0; 
       // Set the rotation as the identity

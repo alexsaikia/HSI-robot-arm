@@ -101,7 +101,7 @@
       <axis
         xyz="0 0 1" />
         <!-- Changed bounds to +-pi/2 from +-2.41 -->
-      <limit lower="${-pi/2}" upper="${pi/2}" effort="39" velocity="1.3963" />
+      <limit lower="${-pi/2+0.05}" upper="${pi/2-0.05}" effort="39" velocity="1.3963" />
     </joint>
     <link name="${prefix}half_arm_2_link">
       <inertial>
@@ -137,7 +137,9 @@
         xyz="0 0 1" />
       <limit        
         effort="39"
-        velocity="1.3963" />
+        velocity="1.3963" 
+        />
+        <!--  changed from continuous to revolute -->
     </joint>
     <link name="${prefix}forearm_link">
       <inertial>
@@ -172,7 +174,8 @@
       <axis
         xyz="0 0 1" />
         <!-- Changed upper bound from 2.66 to 0 -->
-      <limit lower="-2.66" upper="0.0" effort="39" velocity="1.3963" />
+        <!-- Changed lower bound from -2.66 to -2.61 -->
+      <limit lower="-2.61" upper="0.0" effort="39" velocity="1.3963" />
     </joint>
     <link name="${prefix}spherical_wrist_1_link">
       <inertial>
@@ -208,7 +211,10 @@
         xyz="0 0 1" />
       <limit
         effort="9"
-        velocity="1.2218" />
+        velocity="1.2218" 
+        
+        />
+        <!--  changed from continuous to revolute -->
     </joint>
     <link name="${prefix}spherical_wrist_2_link">
       <inertial>
@@ -242,7 +248,8 @@
         link="${prefix}spherical_wrist_2_link" />
       <axis
         xyz="0 0 1" />
-      <limit lower="-2.23" upper="2.23" effort="9" velocity="1.2218" />
+        <!-- changed from 2.23 to 2.20 for both -->
+      <limit lower="-2.20" upper="2.20" effort="9" velocity="1.2218" />
     </joint>
     <xacro:if value="${vision}">
     <link name="${prefix}bracelet_link">

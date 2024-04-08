@@ -15,6 +15,18 @@
 #include <filesystem>
 #include <sensor_msgs/CameraInfo.h>
 #include <geometry_msgs/PoseStamped.h>
+#include <tf2/LinearMath/Quaternion.h>
+#include <tf2/LinearMath/Matrix3x3.h>
+#include <tf2/LinearMath/Transform.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
+#include <ros/ros.h>
+#include <ros/topic.h>
+#include <ros/service_client.h>
+#include <ros/param.h>
+#include <ros/spinner.h>
+#include <ros/callback_queue.h>
+#include <ros/callback_queue_interface.h>
+#include <ros/callback_queue.h>
 
 
 
@@ -127,14 +139,17 @@ int main(int argc, char** argv)
     // Define the size of the sphere in meters
     primitive.type = primitive.SPHERE;
     primitive.dimensions.resize(1);
-    primitive.dimensions[primitive.SPHERE_RADIUS] = 0.9 * sample_rad;
+    primitive.dimensions[primitive.SPHERE_RADIUS] = 0.7 * sample_rad;
 
     // Define the pose of the sphere (relative to the frame_id)
     geometry_msgs::Pose sphere_pose;
     sphere_pose.orientation.w = 1.0;
+    sphere_pose.orientation.x = 0.0;
+    sphere_pose.orientation.y = 0.0;
+    sphere_pose.orientation.z = 0.0;
     sphere_pose.position.x = s_pos[0];
     sphere_pose.position.y = s_pos[1];
-    sphere_pose.position.z = s_pos[2];
+    sphere_pose.position.z = s_pos[2]-0.05;
 
     collision_object.primitives.push_back(primitive);
     collision_object.primitive_poses.push_back(sphere_pose);
@@ -287,7 +302,139 @@ int main(int argc, char** argv)
     capture_points.push_back(capture_point);
     capture_orientations.push_back(capture_orientation);
   }
+  std::vector<std::vector<double>> capture_points_ordered;
+  std::vector<std::vector<double>> capture_orientations_ordered;
+  std::vector<std::vector<double>> quadrant_1_points;
+  std::vector<std::vector<double>> quadrant_2_points;
+  std::vector<std::vector<double>> quadrant_3_points;
+  std::vector<std::vector<double>> quadrant_4_points;
+  std::vector<std::vector<double>> quadrant_1_orientations;
+  std::vector<std::vector<double>> quadrant_2_orientations;
+  std::vector<std::vector<double>> quadrant_3_orientations;
+  std::vector<std::vector<double>> quadrant_4_orientations;
 
+  for(int i = 0; i<NN;i++){
+    double x = capture_points[i][0]- s_pos[0];
+    double y = capture_points[i][1]- s_pos[1];
+    double cos_theta = x/sqrt(x*x+y*y);
+    if (x*y>=0){
+      if(cos_theta>=0){
+        //  Quadrant 1
+        if(quadrant_1_points.size()==0){
+          quadrant_1_points.push_back(capture_points[i]);
+          quadrant_1_orientations.push_back(capture_orientations[i]);
+        }
+        else{
+          // Sort the quadrant 1 points by cos_theta in descending order
+          for(int j = 0; j<quadrant_1_points.size();j++){
+            double x_j = quadrant_1_points[j][0]- s_pos[0];
+            double y_j = quadrant_1_points[j][1]- s_pos[1];
+            double cos_theta_j = x_j/sqrt(x_j*x_j+y_j*y_j);
+            if(cos_theta>cos_theta_j){
+              quadrant_1_points.insert(quadrant_1_points.begin()+j,capture_points[i]);
+              quadrant_1_orientations.insert(quadrant_1_orientations.begin()+j,capture_orientations[i]);
+              break;
+            }
+            else if(j==quadrant_1_points.size()-1){
+              quadrant_1_points.push_back(capture_points[i]);
+              quadrant_1_orientations.push_back(capture_orientations[i]);
+              break;
+            }
+          } 
+        }
+      }  
+      else{
+        //  Quadrant 3
+        if(quadrant_3_points.size()==0){
+          quadrant_3_points.push_back(capture_points[i]);
+          quadrant_3_orientations.push_back(capture_orientations[i]);
+        }
+        else{
+          // Sort the quadrant 3 points by cos_theta in ascending order
+          for(int j = 0; j<quadrant_3_points.size();j++){
+            double x_j = quadrant_3_points[j][0]- s_pos[0];
+            double y_j = quadrant_3_points[j][1]- s_pos[1];
+            double cos_theta_j = x_j/sqrt(x_j*x_j+y_j*y_j);
+            if(cos_theta<cos_theta_j){
+              quadrant_3_points.insert(quadrant_3_points.begin()+j,capture_points[i]);
+              quadrant_3_orientations.insert(quadrant_3_orientations.begin()+j,capture_orientations[i]);
+              break;
+            }
+            else if(j==quadrant_3_points.size()-1){
+              quadrant_3_points.push_back(capture_points[i]);
+              quadrant_3_orientations.push_back(capture_orientations[i]);
+              break;
+            }
+          } 
+        }
+      }
+    }
+    else{
+      if(cos_theta>=0){
+        // Quadrant 2
+        if(quadrant_2_points.size()==0){
+          quadrant_2_points.push_back(capture_points[i]);
+          quadrant_2_orientations.push_back(capture_orientations[i]);
+        }
+        else{
+          // Sort quadrant 2 points by cos_theta in descending order
+          for(int j = 0; j<quadrant_2_points.size();j++){
+            double x_j = quadrant_2_points[j][0]- s_pos[0];
+            double y_j = quadrant_2_points[j][1]- s_pos[1];
+            double cos_theta_j = x_j/sqrt(x_j*x_j+y_j*y_j);
+            if(cos_theta<cos_theta_j){
+              quadrant_2_points.insert(quadrant_2_points.begin()+j,capture_points[i]);
+              quadrant_2_orientations.insert(quadrant_2_orientations.begin()+j,capture_orientations[i]);
+              break;
+            }
+            else if(j==quadrant_2_points.size()-1){
+              quadrant_2_points.push_back(capture_points[i]);
+              quadrant_2_orientations.push_back(capture_orientations[i]);
+              break;
+            }
+          } 
+        }
+      }
+      else{
+        //  Quadrant 4
+        if(quadrant_4_points.size()==0){
+          quadrant_4_points.push_back(capture_points[i]);
+          quadrant_4_orientations.push_back(capture_orientations[i]);
+        }
+        else{
+          // Sort quadrant 4 points by cos_theta in ascending order
+          for(int j = 0; j<quadrant_4_points.size();j++){
+            double x_j = quadrant_4_points[j][0]- s_pos[0];
+            double y_j = quadrant_4_points[j][1]- s_pos[1];
+            double cos_theta_j = x_j/sqrt(x_j*x_j+y_j*y_j);
+            if(cos_theta>cos_theta_j){
+              quadrant_4_points.insert(quadrant_4_points.begin()+j,capture_points[i]);
+              quadrant_4_orientations.insert(quadrant_4_orientations.begin()+j,capture_orientations[i]);
+              break;
+            }
+            else if(j==quadrant_4_points.size()-1){
+              quadrant_4_points.push_back(capture_points[i]);
+              quadrant_4_orientations.push_back(capture_orientations[i]);
+              break;
+            }
+          } 
+        }
+      }
+    }
+  }
+
+
+  // Concatenate the vectors
+  capture_points_ordered.insert(capture_points_ordered.end(), quadrant_1_points.begin(), quadrant_1_points.end());
+  capture_points_ordered.insert(capture_points_ordered.end(), quadrant_4_points.begin(), quadrant_4_points.end()); 
+  capture_points_ordered.insert(capture_points_ordered.end(), quadrant_3_points.begin(), quadrant_3_points.end());
+  capture_points_ordered.insert(capture_points_ordered.end(), quadrant_2_points.begin(), quadrant_2_points.end());
+  capture_orientations_ordered.insert(capture_orientations_ordered.end(), quadrant_1_orientations.begin(), quadrant_1_orientations.end());
+  capture_orientations_ordered.insert(capture_orientations_ordered.end(), quadrant_4_orientations.begin(), quadrant_4_orientations.end());
+  capture_orientations_ordered.insert(capture_orientations_ordered.end(), quadrant_3_orientations.begin(), quadrant_3_orientations.end());
+  capture_orientations_ordered.insert(capture_orientations_ordered.end(), quadrant_2_orientations.begin(), quadrant_2_orientations.end());
+  capture_points = capture_points_ordered;
+  capture_orientations = capture_orientations_ordered;
   // Define a vector containing all the target poses
   std::vector<geometry_msgs::Pose> target_poses;
   for (int i = 0; i < NN; i++)
@@ -383,9 +530,6 @@ int main(int argc, char** argv)
     }
   }
 
-
-  
-  
   // END_DATA_SPHERE_COLLECTION
   //Shut it down!
 

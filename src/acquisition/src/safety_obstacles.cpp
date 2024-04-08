@@ -81,7 +81,7 @@ int main(int argc, char **argv)
     // The boxes will act as walls around the robot
     ROS_INFO("Creating collision objects");
     // Create a box to the right of the robot
-    collision_objects.push_back(make_box("right_wall", {2.4, 0.01, 1.0}, {1.0, -0.2, 0.5}, move_group_interface.getPlanningFrame()));
+    collision_objects.push_back(make_box("right_wall", {2.4, 0.01, 1.0}, {1.0, -0.6, 0.5}, move_group_interface.getPlanningFrame()));
     ROS_INFO("Collision object 1 created");
     // Create a box to the left of the robot
     collision_objects.push_back(make_box("left_wall", {2.4, 0.01, 1.0}, {1.0, 0.6, 0.5}, move_group_interface.getPlanningFrame()));
