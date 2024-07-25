@@ -1,5 +1,6 @@
 srdfdom
 /home/alex/HSI-robot-arm/devel/.private/srdfdom/cmake.lock /home/alex/HSI-robot-arm/devel/./cmake.lock
+/home/alex/HSI-robot-arm/devel/.private/srdfdom/lib/libsrdfdom.so.0.6.4 /home/alex/HSI-robot-arm/devel/lib/libsrdfdom.so.0.6.4
 /home/alex/HSI-robot-arm/devel/.private/srdfdom/lib/libsrdfdom.so /home/alex/HSI-robot-arm/devel/lib/libsrdfdom.so
 /home/alex/HSI-robot-arm/devel/.private/srdfdom/lib/libsrdfdom.so.0.6.3 /home/alex/HSI-robot-arm/devel/lib/libsrdfdom.so.0.6.3
 /home/alex/HSI-robot-arm/devel/.private/srdfdom/lib/python3/dist-packages/srdfdom/__init__.py /home/alex/HSI-robot-arm/devel/lib/python3/dist-packages/srdfdom/__init__.py
